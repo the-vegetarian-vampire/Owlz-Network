@@ -6,26 +6,28 @@
         <title>{% block title %}Owlz Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
-
-        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/favicon-16x16.png' %}">
     </head>
     <body>
         
         <!--Navbar style --> 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <!--Image Icon --> 
-            <img id="logo" height="40" width="40" href="{% static 'owl2.png' %}" alt="icon"/>
-            <a class="navbar-brand" href="#">Owlz</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <!--Image Icon -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img height="45" width="45" src="{% static 'network/1.png' %}" alt="icon"/>
+            <a class="navbar-brand" href="{% url 'index' %}">Owlz</a>
             
             <!--Navbar links  --> 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                      <a class="nav-link" href="{% url 'index' %}" style="font-size: 18px;">All Posts</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'following' %}">Following</a>
+                        <a class="nav-link" href="{% url 'following' %}" style="font-size: 18px;">Following</a>
                     </li>
                     {% endif %}
                 </li>
