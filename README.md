@@ -1,4 +1,5 @@
-![favicon-32x32](https://user-images.githubusercontent.com/105305546/217112795-a09001ac-5781-48e0-a887-4677f4ad2750.png) ## The Owlz Network!
+![favicon-32x32](https://user-images.githubusercontent.com/105305546/217112795-a09001ac-5781-48e0-a887-4677f4ad2750.png) 
+### The Owlz Network!
 
 Project 4 for Harvard's CS50w Web Programming with Python and JavaScript.
 
