@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <!-- Favicon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/favicon-16x16.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/images/owl-xtr-xtr-small.png' %}">
     </head>
     <body>
         
@@ -16,19 +16,30 @@
 
             <!--Image Icon -->
             <a class="navbar-brand" href="{% url 'index' %}">
-                <img height="45" width="45" src="{% static 'network/1.png' %}" alt="icon"/>
+                <img height="45" width="45" src="{% static 'network/images/owl-small.png' %}" alt="icon"/>
             <a class="navbar-brand" href="{% url 'index' %}">Owlz</a>
             
             <!--Navbar links  --> 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="{% url 'index' %}" style="font-size: 18px;">All Posts</a>
+                      <a class="nav-link" href="{% url 'index' %}" style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                      </svg> All Posts</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'following' %}" style="font-size: 18px;">Following</a>
+                        <a class="nav-link" href="{% url 'following' %}" style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                          </svg> Following</a>
                     </li>
+                    <!--To Do-->
+                    <a class="nav-link mx-lg-2" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                      </svg> Messages</a>
+                    <a class="nav-link mx-lg-2" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                      </svg> Bookmarks</a>
                     {% endif %}
                 </li>
             </ul>
@@ -41,14 +52,15 @@
                         <i class="fa fa-user pr-1" aria-hidden="true"></i> Signed in as <strong>{{ user.username }}</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'logout' %}"> Log out   <svg style="padding: 2px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                        </svg></a>
+                        <a class="dropdown-item" href="{% url 'logout' %}"> Log out   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                          </svg></a>
                     </div>
                 </li>
                 {% else %}
-                    <a class="nav-link mx-lg-2" href="{% url 'login' %}">Log In</a>
-                    <a class="nav-link mx-lg-2" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link mx-lg-2" style="font-size: 18px" href="{% url 'login' %} ">Log In</a>
+                    <a class="nav-link mx-lg-2" style="font-size: 18px; background-color:yellow; border-radius: 15px;" href="{% url 'register' %}">Sign Up</a>
                 {% endif %}
             </ul>
             </div>

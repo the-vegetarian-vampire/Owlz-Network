@@ -1,8 +1,10 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
     <div class="container" width=50%>
-        <h2 class="text-center title" style="padding-top: 40px; padding-bottom: 10px;">Login</h2>
+        <div class="text-center" style="padding-top: 40px;"><img height="45" width="45" src="{% static 'network/images/owl-small.png' %}" alt="icon"/></div>
+        <h2 class="text-center title" style="padding-top: 10px; padding-bottom: 10px;">Login</h2>
 
         {% if message %}
             <div class="text-center title" style="margin-bottom: 10px;">{{ message }}</div>
@@ -25,7 +27,7 @@
         
     </div>
         <br>
-            <p class="text-center title">Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+            <p class="text-center title">Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
         </br>
     
 
