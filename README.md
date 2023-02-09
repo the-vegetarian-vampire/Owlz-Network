@@ -16,6 +16,11 @@ The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contr
 
 The site makes use of `pagination`: displaying 10 posts per page. If there are more than ten posts, `“Next”` takes the user to the next page of posts. If not on the first page, `“Previous”` takes the user to the previous page.
 
+## Login/Register
+Users can `Register` an account with a specified password and `Login`.
+
+<img width="1024" alt="Screen Shot 2023-02-09 at 3 37 12 PM" src="https://user-images.githubusercontent.com/105305546/217932690-69d72589-bcc5-4e3b-9210-2dc082d83435.png">
+
 ## Posts
 Users can `create` text-based posts, `like` posts, and `edit` posts. The user can view all posts under the `All Posts` tab.
 
