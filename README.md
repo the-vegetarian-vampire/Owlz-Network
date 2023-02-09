@@ -1,5 +1,5 @@
 
-![owl-xtr-small](https://user-images.githubusercontent.com/105305546/217709087-ca69ecf0-2b4f-4678-8db3-4217f1966a6c.png)
+![owl-xtr-small copy 2](https://user-images.githubusercontent.com/105305546/217709262-47f916ed-bc1e-4686-82bc-e787f8720dab.png)
 ## Owlz!
 
 Project 4 for Harvard's CS50w Web Programming with Python and JavaScript.
