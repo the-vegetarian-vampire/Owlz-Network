@@ -3,72 +3,93 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Owlz Network{% endblock %}</title>
+        <title>{% block title %}Owlz | Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <!-- Favicon -->
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/images/owl-xtr-xtr-small.png' %}">
+        <!-- Roboto Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+            });
+        </script>
+
     </head>
     <body>
-        
-        <!--Navbar style --> 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-            <!--Image Icon -->
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <img height="45" width="45" src="{% static 'network/images/owl-small.png' %}" alt="icon"/>
-            <a class="navbar-brand" href="{% url 'index' %}">Owlz</a>
-            
-            <!--Navbar links  --> 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'index' %}" style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
-                      </svg> All Posts</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'following' %}" style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                          </svg> Following</a>
-                    </li>
-                    <!--To Do-->
-                    <a class="nav-link mx-lg-2" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
-                      </svg> Messages</a>
-                    <a class="nav-link mx-lg-2" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
-                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                      </svg> Bookmarks</a>
-                    {% endif %}
-                </li>
-            </ul>
-                
-                <!--Dropdown links-->
-                <ul class="navbar-nav justify-content-end">
-                    {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user pr-1" aria-hidden="true"></i> Signed in as <strong>{{ user.username }}</strong>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'logout' %}"> Log out   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                          </svg></a>
+        <!--Left sidbar --> 
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                             <!--Owl image--> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'index' %}" style="margin-top: 20px; margin-bottom: 15px;"> 
+                                    <img height="64" width="70" src="{% static 'network/images/owl-small.png' %}" alt="icon"/></a>
+                            </li>
+                             <!--All Posts--> 
+                             <li class="nav-item">
+                                 <a id="allposts" class="nav-link" href="{% url 'index' %}"  style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                     <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                                    </svg> &nbsp; All Posts</a>
+                                </li>
+                            {% if user.is_authenticated %}
+                             <!--Following--> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'following' %}" style="font-size: 18px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                  </svg> &nbsp; Following</a>
+                            </li>
+                            <!--TO DO'S--> 
+                            <li><a class="nav-link" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                              </svg> &nbsp; Messages</a>
+                            </li>
+                            <a class="nav-link" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                              </svg> &nbsp; Bookmarks</a>
+                              <!--Profile--> 
+                              <a class="nav-link" style="font-size: 18px;" href="{% url 'profile' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                              </svg> &nbsp; Profile</a>
+                              <!--Log out link-->
+                                <a class="nav-item; btn btn" style="color: darkslategrey; font-size: 18px; background-color: gold; border-radius: 16px; text-align: center; border: solid black .5px; margin-top: 15px; margin-bottom: 15px; padding: 4px; width: 75%;" href="{% url 'logout' %}"> &nbsp; Log out</a>
+                            
+                            {% endif %}
+                        </ul>
                     </div>
-                </li>
-                {% else %}
-                    <a class="nav-link mx-lg-2" style="font-size: 18px" href="{% url 'login' %} ">Log In</a>
-                    <a class="nav-link mx-lg-2" style="font-size: 18px; background-color:yellow; border-radius: 15px;" href="{% url 'register' %}">Sign Up</a>
-                {% endif %}
-            </ul>
+                </nav>
+
+                <!--Middle page--> 
+                <div class="body col-md-6" style="padding: 0">
+                    <div class="top-nav navbar navbar-expand-md" style="position: sticky; top: 0; z-index: 1030">
+                        <span id="top-title" class="navbar-brand"></span>
+                    </div>
+                    {% block body %}
+                    {% endblock %}
+                </div>
+
+            <!--Right side-->
+            <div class="right-side col-md-4" style="padding: 15px 25px 0 25px;">
+            {% if not user.is_authenticated %}
+                <div class="card w-100" style="border-radius: 15px">
+                    <div class="card-body">
+                        <h5 class="card-title" style="margin-bottom: 4px; text-align: center;"><strong>Owlz!</strong></h5>
+                        <p style="text-align: center;">Create a hoot.</p>
+                        <!--Sign Up/Log In-->
+                        <a class="nav-link mx-sm-2" style="color: darkslategrey; font-size: 18px; background-color: gold; border-radius: 14px; text-align: center; border: solid black .5px; margin-bottom: 15px;" href="{% url 'register' %}">Sign Up</a>
+                        <a class="nav-link mx-sm-2; btn btn-outline-dark" style="color: darkslategrey; font-size: 18px; border-radius: 14px; margin-left: 7px; margin-right: 7px;" href="{% url 'login' %}">Log In</a>
+                    </div>
+              </div>
+            {% else %}
+
+            {% endif %}
             </div>
-          </nav>
-        <div class="body">
-            {% block body %}
-            {% endblock %}
-        </div> 
+        </div>
 
         <!--Javascript for dropdown links-->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
