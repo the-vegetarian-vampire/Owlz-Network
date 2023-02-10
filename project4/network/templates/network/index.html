@@ -4,8 +4,10 @@
 
 {% block body %}
 <h1 class="text-center" style="font-family: 'Roboto', sans-serif;">All Posts</h1>
+{% if user.is_authenticated %}
 
-<body>
-</body>
+{% else %}
+    <div style="height: 2rem"></div>
+{% endif %}
 
 {% endblock %}
