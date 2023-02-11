@@ -37,6 +37,12 @@
                                 <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
                                 </svg> &nbsp; All Posts</a>
                             </li>
+                            <li class="nav-item" style="font-size: 16px;">
+                                <a class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+                                  </svg> &nbsp; Owlz Premium</a>
+                            </li>
                             {% if user.is_authenticated %}
                              <!--Following--> 
                             <li class="nav-item">
@@ -86,20 +92,46 @@
                     </div>
               </div>
             {% else %}
-            <div class="card w-100" style="border-radius: 15px; overflow: hidden; border-color: transparent">
-                <div class="card-header" style="font-size: 18px; background-color: rgb(245, 248, 250); padding-left: 16px">{{ user.username }} 
-                    <br>
-                    <br>
+            <div class="card w-100;" style="border-radius: 15px; overflow: hidden; border-color: transparent">
+                <div class="card-header" style="font-size: 18px; background-color: rgb(245, 248, 250); padding-left: 16px">
+                    <!--User's profile image -->
+                    <div style="padding: .2rem .1rem .85rem;">
+                        <a class="nav-link" href="{% url 'profile' %}">
+                        <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
+                             src="{% if user.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
+                             <span style="align-content: flex-end; margin-left: 10px;">{{ user.username }}</span> 
+                            </a>
+                    </div>
                     <p style="font-weight: bold;">Suggestions for you</p>
+                    <!--Profile 1-->
                     <div>
-                        <img style="position: absolute;" height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
-                        <div style="display:inline-flex">Name</div>
-                        <div>Suggestions for you</div>
-
+                        <img height="44" width="50" src="{% static 'network/prof-images/john-1.png' %}" alt="icon"/>
+                        <span style="align-content: flex-end">&nbsp; John_but_professional</span>
                     </div>
                     <br>
+                    <!--Profile 2-->
+                    <div>
+                        <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
+                        <span style="align-content: flex-end">&nbsp; Name</span>
+                    </div>
+                    <br>
+                    <!--Profile 3-->
+                    <div>
+                        <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
+                        <span style="align-content: flex-end">&nbsp; HeWhoMustNotBeNamed</span>
+                    </div>
+                    <br>
+                    <!--Profile 4-->
+                    <div>
+                        <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
+                        <span style="align-content: flex-end">&nbsp; Name</span>
+                    </div>
+                    <br>
+                    <!--Bottom text-->
+                    <div>
                     <p class="text-muted" style="font-size: 14px;">About • Help • Press • API • Jobs • Privacy • Terms • Locations • Language </p>
                     <p class="text-muted" style="font-size: 14px;">© 2023 Owlz</p>
+                    </div>
                 </div>
             </div>
 
