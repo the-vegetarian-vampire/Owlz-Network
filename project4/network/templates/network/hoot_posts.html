@@ -2,8 +2,33 @@
 {% load static %}
 
 <!--All Posts-->
- <!--for post in posts -->
+ {% for post in posts %}
 <div class="card mb-3 mr-5 ml-5" style="border-radius: 8px; border-color: transparent; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
     <div class="card-body" style="padding: 12px 16px 5px;">
+
+        <div class="post-header row" style="margin-bottom: 6px">
+            <div class="col-sm-2 post-profile-pic">
+            </div>
+            <div class="col-sm-10" style="padding: 0">
+                <a class="card-title" href="{% url 'profile' post.author %}">
+                    <strong>{{ post.author }}</strong>
+                </a>
+                <a href="{% url 'profile' post.author %}" class="text-muted no-hover-underline"
+                   style="font-size: 0.9rem">@{{ post.author }}</a>
+                {% if user == post.author %}
+                    <button style="float: right; font-size: small; padding: 4px 10px" data-postid="{{ post.id }}"
+                            class="btn edit-btn edit">Edit
+                    </button>
+                {% endif %}
+                <p style="margin-bottom: 3px; line-height: 18px"><small class="post-date">Created
+                    at {{ post.time|naturaltime }}</small></p>
+                </div>
+            </div>
+
+            {# Post content #}
+            <div class="card-text content" id="content{{ post.id }}" style="font-size: 0.9rem; margin-bottom: .5rem">{{ post.content }}</div>
+
     </div>
 </div>
+
+{% endfor %}
