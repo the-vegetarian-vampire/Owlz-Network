@@ -12,9 +12,7 @@ A Twitter-like social media site for making posts and following users.
 ### Specifications:
 Built with `Javascript`, `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`. 
 
-The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contrib/humanize/) `humanize` template filters via `naturaltime`.
-
-The site makes use of `pagination`: displaying 10 posts per page. If there are more than ten posts, `“Next”` takes the user to the next page of posts. If not on the first page, `“Previous”` takes the user to the previous page.
+The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contrib/humanize/) `humanize` template filters via `naturaltime` as well as [pagination](https://docs.djangoproject.com/en/4.1/topics/pagination/): displaying 10 posts per page. If there are more than ten posts, `“Next”` takes the user to the next page of posts. If not on the first page, `“Previous”` takes the user to the previous page.
 
 ## Login/Register
 Users can `Register` an account with a specified password and `Login`.
