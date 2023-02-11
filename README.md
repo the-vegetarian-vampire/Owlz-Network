@@ -7,7 +7,7 @@ Project 4 for Harvard's CS50w Web Programming with Python and JavaScript.
 📹 `Youtube:` ...TBD
 
 ### Overview:
-A Twitter-like social media site for making posts and following users.
+A social media site for making posts, following users, and `hooting` out to the world!
 
 ### Specifications:
 Built with `Javascript`, `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`. 
@@ -19,12 +19,12 @@ Users can `Register` an account with a specified password and `Login`.
 
 <img width="1024" alt="Screen Shot 2023-02-09 at 3 37 12 PM" src="https://user-images.githubusercontent.com/105305546/217932690-69d72589-bcc5-4e3b-9210-2dc082d83435.png">
 
-## Posts
-Users can `create` text-based posts, `like` posts, and `edit` posts. The user can view all posts under the `All Posts` tab.
+## Hoots! or Posts
+Users can create text-based posts, in this case `HOOTS!`, users can `like` hoots, and `edit` hoots. The user can view all hoots/posts under the `All Posts` tab.
 
-To `like`: users click the thumbs-up icon and the page is updated via `JavaScript` asynchronously.
+To `like` a hoot: users click the thumbs-up icon and the page is updated via `JavaScript` asynchronously.
 
-To `edit`: users click `“Edit”` on their own posts, make specified changes, and click `"Save"`.
+To `edit` a hoot: users click `“Edit”` on their own posts, make specified changes, and click `"Save"`.
 
 ## Following
 Users can follow other users, and view only those users they are following under the `following` tab.
