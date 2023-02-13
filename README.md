@@ -8,6 +8,7 @@ Project 4 for Harvard's CS50w Web Programming with Python and JavaScript.
 
 ### Overview:
 A social media site for making posts, following users, and `hooting` out to the world!
+-----
 
 ### Specifications:
 Built with `Javascript`, `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLite`. 
