@@ -16,6 +16,15 @@ Built with `Javascript`, `Python`, `Django`, `HTML/CSS`, `Bootstrap`, and `SQLit
 
 The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contrib/humanize/) `humanize` template filters via `naturaltime` as well as [pagination](https://docs.djangoproject.com/en/4.1/topics/pagination/): displaying 10 posts per page. If there are more than ten posts, `“Next”` takes the user to the next page of posts. If not on the first page, `“Previous”` takes the user to the previous page.
 
+-----
+
+### To Run:
+1. Pip install `Django`
+2. In the terminal, cd into the project4 directory.
+3. Run `python3 manage.py makemigrations network` to make migrations for the network app.
+4. Run `python3 manage.py migrate` to apply migrations to your database.
+5. Run `python3 manage.py runserver` to start the Django web server and visit the website in the browser.
+
 ## Login/Register
 Users can `Register` an account with a specified password and `Login`.
 
