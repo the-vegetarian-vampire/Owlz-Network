@@ -1,5 +1,23 @@
 a:hover {
-    color: rgb(249, 226, 22);
+    color: black;
   }
 
-  
+.nav-item .nav-item::after{
+  color: black;
+}
+
+.nav-link .nav-link::after {
+  color: black;
+}
+a:hover {
+  color: black;
+}
+
+.btn-link {
+  cursor: pointer;
+}
+
+.user {
+  color: black;
+
+}

@@ -1,19 +1,32 @@
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
-import json
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
+import json
 
 from .models import User, Post, Followers
 
 
 def index(request):
-    return render(request, "network/index.html")
-
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
+        content = request.POST["content"]
+        Post.objects.create(content=content, author=request.user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        all_posts = Post.objects.all().order_by("-time")
+        paginator = Paginator(all_posts, 10)
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+        return render(request, "network/index.html", {
+            "page": page
+        })
 
 def login_view(request):
     if request.method == "POST":
@@ -71,3 +84,6 @@ def following(request):
 
 def profile(request):
     return render(request, "network/profile.html")
+
+def new_hoot(request):
+    return render(request, "network/index.html")

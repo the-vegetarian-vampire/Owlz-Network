@@ -97,10 +97,18 @@
                 <div class="card-header" style="font-size: 18px; background-color: rgb(245, 248, 250); padding-left: 16px">
                     <!--User's profile image -->
                     <div style="padding: .2rem .1rem .85rem;">
+                        <script>
+                            function switch_prof(){
+                                alert('Switch profile');
+                                window.location = '/login';
+                            }
+                        </script>
+                        <span id="switch" class="btn-link" onclick="switch_prof()" style="float: right; margin-top: 26px; margin-right: 75px; font-size: 16px; text-decoration: none;">Switch
+                        </span>
                         <a class="nav-link" href="{% url 'profile' %}">
                         <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
                              src="{% if user.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
-                             <span style="align-content: flex-end; margin-left: 10px;">{{ user.username }}</span> 
+                             <span class="user" style="align-content: flex-end; margin-left: 10px; margin-right: 5px;">{{ user.username }}</span> 
                             </a>
                     </div>
                     <p style="font-weight: bold;">Suggestions for you</p>
@@ -112,7 +120,7 @@
                     <br>
                     <!--Profile 2-->
                     <div>
-                        <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
+                        <img height="44" width="50" src="{% static 'network/prof-images/Hermione.png' %}" alt="icon"/>
                         <span style="align-content: flex-end">&nbsp; Hermione</span>
                     </div>
                     <br>
@@ -124,7 +132,7 @@
                     <br>
                     <!--Profile 4-->
                     <div>
-                        <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
+                        <img height="44" width="50" src="{% static 'network/prof-images/Hagrid.png' %}" alt="icon"/>
                         <span style="align-content: flex-end">&nbsp; Hagrid</span>
                     </div>
                     <br>

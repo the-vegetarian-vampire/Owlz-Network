@@ -1,34 +1,44 @@
 {% load humanize %}
 {% load static %}
 
-<!--All Posts-->
- {% for post in posts %}
-<div class="card mb-3 mr-5 ml-5" style="border-radius: 8px; border-color: transparent; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-    <div class="card-body" style="padding: 12px 16px 5px;">
+<!--All Hoots-->
+    {% for post in page.object_list %}
+    <div class="border box-shadow-posts p-3 mb-4 mx-0 mx-md-3" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+    <!-- Single hoot/ Author info-->
+        <div class="pb-2" id="post_headline_{{ post.id }}">
+            <a href="">
+                <strong>{{ post.author }} </strong> <a class="text-muted">@{{ post.author }}</a>
+            </a>
+            <small class="pl-2 text-black-50">{{ post.time|naturaltime }}</small> 
+        <!--Hoot edit-->
+            {% if user.is_authenticated and user == post.author %}
+            <label for="edit"></label>
+            <a href="" data-id="{{ post.id }}" id="edit_{{ post.id }}" class="badge badge-light ml-1" style="float: right;">Edit</a>
+            {% endif %}
+        </div>
 
-        <div class="post-header row" style="margin-bottom: 6px">
-            <div class="col-sm-2 post-profile-pic">
-            </div>
-            <div class="col-sm-10" style="padding: 0">
-                <a class="card-title" href="{% url 'profile' post.author %}">
-                    <strong>{{ post.author }}</strong>
-                </a>
-                <a href="{% url 'profile' post.author %}" class="text-muted no-hover-underline"
-                   style="font-size: 0.9rem">@{{ post.author }}</a>
-                {% if user == post.author %}
-                    <button style="float: right; font-size: small; padding: 4px 10px" data-postid="{{ post.id }}"
-                            class="btn edit-btn edit">Edit
-                    </button>
-                {% endif %}
-                <p style="margin-bottom: 3px; line-height: 18px"><small class="post-date">Created
-                    at {{ post.time|naturaltime }}</small></p>
-                </div>
-            </div>
+        <!--Hoot content-->
+        <div id="post_contentgroup_{{ post.id }}">
+            <p id="post_content_{{ post.id }}" class="mb-2">{{ post.content }}</p>
+        </div>
+        <!--Submit edit-->
+        <div class="text-right"  type="submit" id="save_buttons_{{ post.id }}">
+        </div>
+        
+        <!--Likes-->
+        <div id="post_likes_{{ post.id }}">
+            {% if user.is_authenticated %}
+            <i id="post_likeicon_{{ post.id }}" data-id="{{ post.id }}" class="likeicon likeicon-user fa-heart {% if user in post.liked_by.all %}fas{% else %}far{% endif %}"></i>
+            {% else %}
+            <i class="likeicon fa-heart {% if post.likes != 0 %}fas{% else %}far{% endif %}"></i>
+            {% endif %}
+            <span id="post_likecount_{{ post.id }}"></span>
 
-            {# Post content #}
-            <div class="card-text content" id="content{{ post.id }}" style="font-size: 0.9rem; margin-bottom: .5rem">{{ post.content }}</div>
-
+        </div>
     </div>
-</div>
 
-{% endfor %}
+    {% empty %}
+    <div class="p-3 mb-4 mx-0 mx-md-3">
+        All quiet on the Hooting front.
+        </div>
+    {% endfor %}
