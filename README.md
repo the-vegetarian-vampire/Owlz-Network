@@ -22,7 +22,7 @@ The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contr
 1. Pip install `Django`
 2. In the terminal, cd into the project4 directory.
 3. Run `python3 manage.py makemigrations network` to make migrations for the network app.
-4. Run `python3 manage.py migrate` to apply migrations to your database.
+4. Run `python3 manage.py migrate` to apply migrations to the database.
 5. Run `python3 manage.py runserver` to start the Django web server and visit the website in the browser.
 
 ## Login/Register
