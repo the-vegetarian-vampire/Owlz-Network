@@ -37,7 +37,7 @@
                                 <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
                                 </svg> &nbsp; All Posts</a>
                             </li>
-        <!--Owls Premium--> 
+                        <!--Owls Premium--> 
                             <li class="nav-item">
                                 <a class="nav-link" href="" style="font-size: 16px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
                                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
                                   </svg> &nbsp; Following</a>
                             </li>
-        <!--TODO'S--> 
+                    <!--TODO'S--> 
                             <li><a class="nav-link" style="font-size: 18px;" href=""><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                                 <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                               </svg> &nbsp; Messages</a>
@@ -64,7 +64,7 @@
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                               </svg> &nbsp; Profile</a>
                               <!--Log out link-->
-                                <a class="nav-item; btn btn" style="color: darkslategrey; font-size: 18px; background-color: gold; border-radius: 16px; text-align: center; border: solid black .5px; margin-top: 15px; margin-bottom: 15px; padding: 4px; width: 75%;" href="{% url 'logout' %}"> &nbsp; Log out</a>
+                                <a class="nav-item; btn btn" style="color: darkslategrey; font-size: 18px; background-color: gold; border-radius: 16px; text-align: center; border: solid black 1.5px; margin-top: 15px; margin-bottom: 15px; padding: 4px; width: 75%;" href="{% url 'logout' %}"> &nbsp; Log out</a>
                             
                             {% endif %}
                         </ul>
@@ -73,8 +73,7 @@
 
                 <!--Middle page header--> 
                 <div class="body col-md-6" style="padding: 0">
-                    <div class="top-nav navbar navbar-expand-md" style="position: sticky; top: 0; z-index: 1030">
-                        <span class="navbar-brand"></span>
+                    <div class="top-nav navbar navbar-expand-md" style="position: sticky; top: 0; z-index: 1030; margin-top: em;">
                     </div>
                     {% block body %}
                     {% endblock %}

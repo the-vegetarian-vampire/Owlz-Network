@@ -84,11 +84,11 @@ def following(request):
         return HttpResponseRedirect(reverse("login"))
     user = User.objects.get(id=request.user.id)
     followed_users = [followRelation.user for followRelation in user.following.all()]
-    posts = Post.objects.filter(user__in=followed_users).order_by("-time")
+    posts = Post.objects.filter(author_id__in=followed_users).order_by("-time")
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "network/index.html", {
+    return render(request, "network/following.html", {
         "page": page,
         "followed_users": followed_users
 })
@@ -96,5 +96,5 @@ def following(request):
 def profile(request):
     return render(request, "network/profile.html")
 
-def new_hoot(request):
+def edit_hoot(request):
     return render(request, "network/index.html")

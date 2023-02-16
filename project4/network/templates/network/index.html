@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block body %}
-<h1 class="text-center" style="font-family: 'Roboto', sans-serif;">All Posts</h1>
+<h3 class="text-center" style="font-family: 'Roboto', sans-serif; margin-bottom: 1em;">All Posts</h3>
 {% if user.is_authenticated %}
 <!--User profile image-->
 <div class="card mb-4" style="padding-bottom: 1rem; border-radius: 0; border: none">
@@ -14,20 +14,20 @@
         </div>
 
         <!--text area for new 'hoot'-->
-        <div class="col-md-10">
-            <div class="card-body" style="padding: 0; height: 100%">
+        <div class="col-md-9">
+            <div class="card-body" style="padding: 0; height: 100%;">
                 <form action="{% url 'index' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group" style="margin-bottom: 0">
                         <label for="hoot" style="display: none"></label>
                         <textarea
-                                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                                class="form-control"
-                                id="hoot"
-                                rows="1"
-                                maxlength="280"
-                                name="content"
-                                placeholder=""></textarea>
+                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class="form-control"
+                            id="hoot"
+                            rows="1"
+                            maxlength="280"
+                            name="content"
+                            placeholder=""></textarea>
                     </div>
 
                     <!--TODOS-->
