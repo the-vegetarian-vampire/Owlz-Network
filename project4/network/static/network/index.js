@@ -10,20 +10,12 @@ document.querySelector('#hoot').onkeyup = () => {
     }
 }
 
-// Change 'Hoot' placeholder to random string from array
-// var myArray = ['Owl sayz what?', 'Do you feel fly?', 'Hoot there it is!', 'Hoot out to the universe!'];
-// const random = myArray[Math.floor(Math.random() * myArray.length)]; 
-// console.log(random, myArray[random]);
+// Change 'Hoot' placeholder to random string from array!
+var all_placeholders  = ['Owl sayz what?', 'Do you feel fly?', 'Hoot there it is!', 'Hoot out to the universe!'];
+const random = all_placeholders[Math.floor(Math.random() * all_placeholders.length)]; 
+console.log(random, all_placeholders[random]);
 
 
-// Change 'Tweet' placeholder to random string from array
-var myArray = ['Tweet here!', 'Feel the Tweet?', 'Tweet there it is!'];
-const random = myArray[Math.floor(Math.random() * myArray.length)]; 
-console.log(random, myArray[random]);
-
-
-document.querySelector('#placeholder') = () => {
-    random
- }
+document.getElementById("hoot").placeholder = random;
 
 });

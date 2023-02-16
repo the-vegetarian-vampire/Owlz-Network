@@ -80,7 +80,18 @@ def register(request):
         return render(request, "network/register.html")
 
 def following(request):
-    return render(request, "network/following.html")
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    user = User.objects.get(id=request.user.id)
+    followed_users = [followRelation.user for followRelation in user.following.all()]
+    posts = Post.objects.filter(user__in=followed_users).order_by("-time")
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(request, "network/index.html", {
+        "page": page,
+        "followed_users": followed_users
+})
 
 def profile(request):
     return render(request, "network/profile.html")
