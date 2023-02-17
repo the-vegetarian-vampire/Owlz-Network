@@ -74,7 +74,18 @@
 {% else %}
     <div style="height: 2rem"></div>
 {% endif %}
-{% include "network/hoot_posts.html" %}
+{% include "network/hoot_posts.html" with posts=page_posts %}
 
+<!--Paginator--> 
+<nav aria-label="Page Navigation">
+  <ul class="pagination justify-content-center">
+      {% if page_posts.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page{{ page_posts.pevious_page_number }}">Previous</a></li>
+      {% endif %}
+      {% if page_posts.has_next %}
+      <li class="page-item"><a class="page-link" href="?page{{ page_posts.next_page_number }}">Next</a></li>
+  </ul>
+</nav>
+{% endif %}
 <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}

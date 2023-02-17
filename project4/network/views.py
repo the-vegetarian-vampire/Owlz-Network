@@ -21,11 +21,12 @@ def index(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         all_posts = Post.objects.all().order_by("-time")
-        paginator = Paginator(all_posts, 10)
+        paginator = Paginator(all_posts, 2)
         page_number = request.GET.get('page', 1)
-        page = paginator.get_page(page_number)
+        page_posts = paginator.get_page(page_number)
         return render(request, "network/index.html", {
-            "page": page
+            "all_posts": all_posts,
+            "page_posts": page_posts
         })
 
 def login_view(request):
