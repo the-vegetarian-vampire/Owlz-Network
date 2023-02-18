@@ -21,7 +21,7 @@ def index(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         all_posts = Post.objects.all().order_by("-time")
-        paginator = Paginator(all_posts, 2)
+        paginator = Paginator(all_posts, 10)
         page_number = request.GET.get('page', 1)
         page_posts = paginator.get_page(page_number)
         return render(request, "network/index.html", {
@@ -88,14 +88,41 @@ def following(request):
     posts = Post.objects.filter(author_id__in=followed_users).order_by("-time")
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
+    page_posts = paginator.get_page(page_number)
     return render(request, "network/following.html", {
-        "page": page,
+        "page_posts": page_posts,
         "followed_users": followed_users
 })
 
-def profile(request):
-    return render(request, "network/profile.html")
+def profile(request, username):
+    user_profile = User.objects.get(username=username)
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+
+        if "unfollow_btn" in request.POST:
+            Followers.objects.get(user=user_profile, follower=request.user).delete()
+        elif "follow_btn" in request.POST:
+            Followers.objects.create(user=user_profile, follower=request.user)
+        else:
+            print("Error: wrong input name")
+        return HttpResponseRedirect(reverse("profile", args=(username, )))
+
+    curr_user_follows_this_profile = False
+    if request.user.is_authenticated:
+        curr_user_follows_this_profile = request.user.following.filter(user=user_profile.id).exists()
+
+    user_posts = user_profile.posts.order_by("-time").all()
+    paginator = Paginator(user_posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+    return render(request, "network/profile.html", {
+        "user_profile": user_profile,
+        "user_posts": user_profile.posts.order_by("-time").all(),
+        "page_posts": page_posts,
+        "following_profile": curr_user_follows_this_profile
+    })
 
 def edit_hoot(request):
     return render(request, "network/index.html")
