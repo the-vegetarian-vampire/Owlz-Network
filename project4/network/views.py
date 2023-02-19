@@ -96,17 +96,15 @@ def following(request):
 
 def profile(request, username):
     user_profile = User.objects.get(username=username)
-
     if request.method == "POST":
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
-
-        if "unfollow_btn" in request.POST:
+        if "unfollow_button" in request.POST:
             Followers.objects.get(user=user_profile, follower=request.user).delete()
-        elif "follow_btn" in request.POST:
+        elif "follow_button" in request.POST:
             Followers.objects.create(user=user_profile, follower=request.user)
         else:
-            print("Error: wrong input name")
+            pass
         return HttpResponseRedirect(reverse("profile", args=(username, )))
 
     curr_user_follows_this_profile = False
