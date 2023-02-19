@@ -106,7 +106,7 @@
                         </span>
                         <a class="nav-link" href="{% url 'profile' user.username %}">
                         <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
-                             src="{% if user.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
+                             src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
                              <span class="user" style="align-content: flex-end; margin-left: 10px; margin-right: 5px;">{{ user.username }}</span> 
                             </a>
                     </div>

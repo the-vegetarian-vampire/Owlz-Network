@@ -26,6 +26,20 @@
             <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
           </svg> Brooklyn, NY
         </p>
+        {% if user.is_authenticated and user != user_profile %}
+        <div style="float: right">
+            <form action="{% url 'profile' user_profile.username %}" method="POST">
+                {% csrf_token %}
+                {% if following_profile %} 
+                    <input type="submit" value="Following" name="unfollow_button" class="btn following-button"
+                           id="unfollowButton">
+                {% else %}
+                    <input type="submit" value="Follow" name="follow_button" class="btn follow_button">
+                {% endif %}
+            </form>
+        </div>
+        {% endif %}
+
         </div>
     </header>
 </div>
