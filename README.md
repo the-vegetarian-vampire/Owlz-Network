@@ -29,7 +29,7 @@ The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contr
 ## Login/Register
 Users can `Register` an account with a specified password and `Login`.
 
-<img width="1024" alt="Screen Shot 2023-02-09 at 3 37 12 PM" src="https://user-images.githubusercontent.com/105305546/217932690-69d72589-bcc5-4e3b-9210-2dc082d83435.png">
+<img width="1200" alt="Screen Shot 2023-02-18 at 11 12 51 PM" src="https://user-images.githubusercontent.com/105305546/219921840-2386bb05-9c16-41b8-9288-519405ff54e0.png">
 
 ## Hoots!
 Users can create text-based posts, in this case `HOOTS!`, users can `like` and `edit` [their own] hoots. The user can view all hoots under the `All Posts` tab.
