@@ -15,10 +15,10 @@
             <img alt="profile picture" height="59" width="65px" href=""
                     src="{% if user_profile.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
         </div>
-        <ul>
-            <div>{{ user_profile.posts.count }} hoots</div>
-            <div>{{ user_profile.followers.count }} followers</div>
-            <div>{{ user_profile.following.count }} following</div>
+        <ul class="row d-flex justify-content-center">
+            <h6 class="col-4">{{ user_profile.posts.count }} hoots</h6>
+            <h6 class="col-4">{{ user_profile.followers.count }} followers</h6>
+            <h6 class="col-4">{{ user_profile.following.count }} following</h6>
         </ul>  
             <div>{{ user_profile.first_name }} {{ user_profile.last_name }} </div>
         <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">

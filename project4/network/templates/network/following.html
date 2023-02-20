@@ -3,16 +3,29 @@
 {% load static %}
 
 {% block body %}
-<h3 class="text-center" style="font-family: 'Roboto', sans-serif;">Following</h3>
+<h3 class="text-center" style="font-family: 'Roboto', sans-serif; margin-bottom: 1.5em;">Following</h3>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-8 mt-0 mt-sm-3 bg-white">
-            {% include "network/hoot_posts.html" with posts=page_posts %}
-        </div>
-    </div>
-</div>
+{% include "network/hoot_posts.html" with posts=page_posts %}
 
-
+<!--Pagination--> 
+{% if page_posts.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination" style="justify-content: center;">
+      {% if page_posts.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_posts.previous_page_number }}">Back</a></li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Back</a></li>
+      {% endif %}
+      <li class="page-item current-item"><span class="current page-link">
+          {{ page_posts.number }} of {{ page_posts.paginator.num_pages }}
+      </span></li>
+      {% if page_posts.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_posts.next_page_number }}">Next</a></li>
+      {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+      {% endif %}
+    </ul>
+</nav>
+{% endif %}
 
 {% endblock %}

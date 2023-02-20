@@ -9,9 +9,6 @@ a:hover {
 .nav-link .nav-link::after {
   color: black;
 }
-a:hover {
-  color: black;
-}
 
 .btn-link {
   cursor: pointer;
@@ -19,5 +16,4 @@ a:hover {
 
 .user {
   color: black;
-
 }

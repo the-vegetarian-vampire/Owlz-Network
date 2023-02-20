@@ -10,15 +10,38 @@
                 <strong>{{ post.author.first_name }} </strong> <a class="text-muted">@{{ post.author }}</a>
             </a>
             <small class="text-muted">• {{ post.time|naturaltime }}</small> 
+
         <!--Hoot edit-->
             {% if user.is_authenticated and user == post.author %}
             <label for="edit"></label>
-            <a href="" data-id="{{ post.id }}" id="edit_{{ post.id }}" class="badge badge-light ml-1" style="float: right;">Edit</a>
+            <a> <button class="badge badge-light" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}" style="float: right;">Edit</button>
+            </a>
+            <!--Bootstrap Modal Pop-up-->
+            <div class="modal" id="modal_edit_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_post_{{ post.id }}_label" aria-hidden="true">
+                <div class="modal-dialog" role="document"> 
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Hoot</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <textarea rows="5" id="textarea_{{ post.id }}" class="form-control" name="content">{{ post.content }}</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save Edit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             {% else %}
+            
 <!--Todo--> <!--Dots-->
             <span style="float: right;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3  1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                 </svg>
             </span>
             {% endif %}
@@ -29,7 +52,7 @@
             <p id="post_content_{{ post.id }}" class="mb-2">{{ post.content }}</p>
         </div>
         <!--Submit edit-->
-        <div class="text-right"  type="submit" id="">
+        <div class="text-right"  type="submit" data-id="{{ post.id }}" id="{{ post.id }}">
         </div>
         
         <!--Likes-->
@@ -66,7 +89,12 @@
     </div>
 
     {% empty %}
-    <div class="p-3 mb-4 mx-0 mx-md-3">
+    <div class="p-3 mb-4 mx-0 mx-md-3" style="text-align: center;">
         All quiet on the Hooting front.
-        </div>
+        <p>
+       <!--Owl gif-->
+          <div class="text-align center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+    </div>
+
+
     {% endfor %}

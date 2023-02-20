@@ -122,5 +122,22 @@ def profile(request, username):
         "following_profile": curr_user_follows_this_profile
     })
 
-def edit_hoot(request):
-    return render(request, "network/index.html")
+def edit_hoot(request, post_id):
+    if request.method != "POST":
+        return JsonResponse({"Request error, 404"}, status=400)
+    try:
+        post = Post.objects.get(pk = post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"Request error, 404"}, status=404)
+    if request.user == post.author:
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        content = body['content']
+        Post.objects.filter(pk=post_id).update(content=f'{content}')
+
+        # Returns Json Response with content passed back that we can use with JS to update page
+        return JsonResponse({"message": "Post updated successfully.", "content": content}, status=200)
+
+    else:
+        return JsonResponse({"error": "You do not have permission to do this"}, status=400)
+
