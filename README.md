@@ -1,4 +1,4 @@
-![owl-small](https://user-images.githubusercontent.com/105305546/220189470-607ad15d-6827-49a4-abe5-64d0ef588c29.png)
+![owl-xtr-small](https://user-images.githubusercontent.com/105305546/220189533-c1352f2c-fece-4db7-8793-bfb18f840a35.png)
 
 ## Owlz! 
 *"Create a Hoot!"*
