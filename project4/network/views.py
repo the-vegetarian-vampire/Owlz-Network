@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.http import JsonResponse
 from django.contrib import messages
@@ -146,12 +147,14 @@ def edit_hoot(request, post_id):
     else:
         return JsonResponse({"error"}, status=400)
 
+@csrf_exempt
+@login_required
 def like_post(request, post_id):
     user = request.user
     try:
         post = Post.objects.get(pk = post_id)
     except Post.DoesNotExist:
-        return JsonResponse({"error"}, status=404)
+        return JsonResponse({"error in views.py"}, status=404)
     # If the user has liked the post, unlike it
     if (user.likes.filter(pk=post_id).exists()):
         post.liked_by.remove(user)

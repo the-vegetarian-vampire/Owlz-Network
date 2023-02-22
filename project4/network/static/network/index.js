@@ -9,30 +9,23 @@ document.querySelector('#hoot').onkeyup = () => {
     document.querySelector('#submit').disabled = true;
     }
 }
-
 // Change 'Hoot' placeholder to random string from array
-var all_placeholders  = ['Owl-gebra is hard...', 'Hoot there it is!', 'Hoot out to the universe!','Owl you need is love.','Create a Hoot!'];
+var all_placeholders  = ['Owl-gebra is hard.', 'Hoot there it is!', 'Hoot out to the universe!','Owl you need is love.','Create a Hoot!'];
 const random = all_placeholders[Math.floor(Math.random() * all_placeholders.length)]; 
 console.log(random);
 
 document.getElementById("hoot").placeholder = random;
-
 });
 
-// Updates no of likes for a given ID
+// Update likes per post
 function updateLikes(id, likes) {
     let likeCount = document.getElementById(`post_likecount_${id}`);
 
     likeCount.innerHTML = likes;
 }
-
-// Edit likes
+// Likes // @csrf_exempt via views.py
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Add event listener that listens for any clicks on the page
     document.addEventListener('click', event => {
-        
-        // Save the element the user clicked on
         const element = event.target;
 
         // If the user clicked on a like icon
@@ -42,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let id = element.dataset.id;
             
             // Make fetch request to update page without full reload
-            fetch(`/updatelike/${id}`, {
+            fetch(`/likepost/${id}`, {
                 method: "POST"
             })
             .then(function(response) {
