@@ -115,11 +115,15 @@ def profile(request, username):
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
+    show_all = request.user.followers.all()
+    show_all_following = request.user.following.all()
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
         "user_posts": user_profile.posts.order_by("-time").all(),
         "page_posts": page_posts,
-        "following_profile": curr_user_follows_this_profile
+        "following_profile": curr_user_follows_this_profile,
+        "show_all": show_all,
+        "show_all_following": show_all_following,
     })
 
 def edit_hoot(request, post_id):
@@ -136,8 +140,24 @@ def edit_hoot(request, post_id):
         Post.objects.filter(pk=post_id).update(content=f'{content}')
 
         # Returns Json Response with content passed back that we can use with JS to update page
-        return JsonResponse({"message": "Post updated successfully.", "content": content}, status=200)
+        return JsonResponse({"message": "Post updated.", "content": content}, status=200)
 
     else:
-        return JsonResponse({"error": "You do not have permission to do this"}, status=400)
+        return JsonResponse({"error"}, status=400)
 
+def like_post(request, post_id):
+    user = request.user
+    try:
+        post = Post.objects.get(pk = post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error"}, status=404)
+    # If the user has liked the post, unlike it
+    if (user.likes.filter(pk=post_id).exists()):
+        post.liked_by.remove(user)
+        likes_post = False
+    else: 
+        post.liked_by.add(user)
+        likes_post = True
+    # Save updated no of likes on post
+    likes = post.likes()
+    return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)

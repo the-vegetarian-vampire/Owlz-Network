@@ -17,3 +17,8 @@ a:hover {
 .user {
   color: black;
 }
+
+.editowl {
+  cursor: pointer;
+
+}

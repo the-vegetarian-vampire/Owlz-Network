@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-// Default 'Hoot' button disabled: per lecture 5: 114:00 - https://youtu.be/x5trGVMKTdY?t=4442 
+// Default 'Hoot' button disabled per lecture 5: 114:00 - https://youtu.be/x5trGVMKTdY?t=4442 
 document.querySelector('#submit').disabled = true;
 document.querySelector('#hoot').onkeyup = () => {
     if (document.querySelector('#hoot').value.length > 0) {
@@ -13,7 +13,7 @@ document.querySelector('#hoot').onkeyup = () => {
 // Change 'Hoot' placeholder to random string from array
 var all_placeholders  = ['Owl-gebra is hard...', 'Hoot there it is!', 'Hoot out to the universe!','Owl you need is love.','Create a Hoot!'];
 const random = all_placeholders[Math.floor(Math.random() * all_placeholders.length)]; 
-console.log(random, all_placeholders[random]);
+console.log(random);
 
 document.getElementById("hoot").placeholder = random;
 
