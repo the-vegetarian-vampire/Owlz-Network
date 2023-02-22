@@ -16,23 +16,27 @@
             src="{% if user_profile.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
             <div class="row d-flex justify-content-center">
                 <h6 class="col-4">{{ user_profile.posts.count }} hoots</h6>
-                <h6 class="col-4">{{ user_profile.followers.count }} followers {% if user.is_authenticated and user == user_profile %} {{ show_all }} {% endif %}</h6>
-                <h6 class="col-4">{{ user_profile.following.count }} following  {% if user.is_authenticated and user == user_profile %} {{ show_all_following }} {% endif %}</h6>
+                <h6 class="col-4" id="demo">{{ user_profile.followers.count }} followers</h6>
+                <h6 class="col-4">{{ user_profile.following.count }} following </h6>
             </div>  
+            <!--Javascript Display List-->
+            <div id="followers-view">{% if user.is_authenticated and user == user_profile %} {{ show_all_followers }} {% endif %}</div>
+            <!--Javascript Display List-->
+            <div id="following-view">{% if user.is_authenticated and user == user_profile %} You are following {{ show_all_following }} {% endif %}</div>
         </div>
 
         <div style="justify-content: flex-start;">
         </div>
         
         
-            <div>{{ user_profile.first_name }} {{ user_profile.last_name }} </div>
-        <p>
-        <!--Display Location-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
-            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-          </svg> Brooklyn, NY
-        </p>
+            <div style="float: left;">{{ user_profile.first_name }} {{ user_profile.last_name }} </div>
+            <!--Display Location-->
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg> Brooklyn, NY
+            </div>
         <!--Follow/Unfollow Buttons-->
         {% if user.is_authenticated and user != user_profile %}
         <div style="float: right">
@@ -42,7 +46,7 @@
                     <input type="submit" value="Following" name="unfollow_button" class="btn following-button"
                            id="unfollowButton">
                 {% else %}
-                    <input type="submit" value="Follow" name="follow_button" class="btn follow_button">
+                    <input type="submit" value="Follow" name="follow_button" class="btn follow_button" id="followButton">
                 {% endif %}
             </form>
         </div>

@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
 import json
+import random
 
 from .models import User, Post, Followers
 
@@ -115,14 +116,14 @@ def profile(request, username):
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
-    show_all = request.user.followers.all()
+    show_all_followers = request.user.followers.all()
     show_all_following = request.user.following.all()
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
         "user_posts": user_profile.posts.order_by("-time").all(),
         "page_posts": page_posts,
         "following_profile": curr_user_follows_this_profile,
-        "show_all": show_all,
+        "show_all_followers": show_all_followers,
         "show_all_following": show_all_following,
     })
 
@@ -161,3 +162,12 @@ def like_post(request, post_id):
     # Save updated no of likes on post
     likes = post.likes()
     return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)
+
+def random_user(request, username):
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        random_user = {}
+        pass
+    return render(request, "network/index.html")
