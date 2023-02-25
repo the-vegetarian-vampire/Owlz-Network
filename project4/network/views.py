@@ -11,7 +11,7 @@ from django.urls import reverse
 import json
 import random
 
-from .models import User, Post, Followers
+from .models import User, Post, Followers, Comment
 
 
 def index(request):
@@ -28,7 +28,7 @@ def index(request):
         page_posts = paginator.get_page(page_number)
         return render(request, "network/index.html", {
             "all_posts": all_posts,
-            "page_posts": page_posts
+            "page_posts": page_posts,
         })
 
 def login_view(request):
@@ -174,3 +174,40 @@ def random_user(request, username):
         random_user = {}
         pass
     return render(request, "network/index.html")
+
+def bookmarks(request):
+    if request.method == "GET":
+        bookmarks = Post.objects.all()
+        return render(request, "network/bookmarks.html", {
+            "bookmarks": bookmarks,
+            })
+
+def remove_bookmarks(request, id):
+    data = Post.objects.get(pk=id)
+    user = request.user
+    data.bookmarked_by.remove(user)
+    return HttpResponseRedirect(reverse("display_bookmarks",args=(id, )))
+
+def add_bookmarks(request, id):
+    data = Post.objects.get(pk=id)
+    user = request.user
+    data.bookmarked_by.add(user)
+    return HttpResponseRedirect(reverse("display_bookmarks",args=(id, )))
+
+def display_bookmarks(request):
+    user = request.user
+    bookmarks = user.bookmarks.all()
+    all_posts = Post.objects.all().order_by("-time")
+    paginator = Paginator(all_posts, 10)
+    page_number = request.GET.get('page', 1)
+    page_posts = paginator.get_page(page_number)
+    return render(request, "network/bookmarks.html", {
+        "bookmarks": bookmarks,
+        "all_posts": all_posts,
+        "paginator": paginator,
+        "page_number": page_number,
+        "page_posts": page_posts,
+    })
+
+def inbox_messages(request):
+    return render(request, "network/messages.html")

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     return response.json()
                 }
-                // If response receives an error, rejects the promise and returns an error to the console.
+                // If response receives an error, reject promise and return an error.
                 else {
                     return Promise.reject('There has been an error.')
                 }
@@ -55,10 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Like icon on page
                 let likeIcon = document.getElementById(`post_likeicon_${id}`);
                 
-                // Update no of likes on page
+                // Update num of likes on page
                 updateLikes(id, likes)
 
-                // Updates like icon correctly according to whether user likes post or not
+                // Update like icon
                 if (likesPost) {
                     likeIcon.className = 'likeicon fa-heart fas';
                 } else {
@@ -70,5 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 })
+
+// edit post
+
+
 
 });
