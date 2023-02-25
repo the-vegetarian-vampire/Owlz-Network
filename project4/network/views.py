@@ -162,7 +162,7 @@ def like_post(request, post_id):
     else: 
         post.liked_by.add(user)
         likes_post = True
-    # Save updated no of likes on post
+    # Update num of likes on post
     likes = post.likes()
     return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)
 
@@ -186,19 +186,19 @@ def remove_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
     data.bookmarked_by.remove(user)
-    return HttpResponseRedirect(reverse("display_bookmarks",args=(id, )))
+    return HttpResponseRedirect(reverse("remove_bookmarks",args=(id, )))
 
 def add_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
     data.bookmarked_by.add(user)
-    return HttpResponseRedirect(reverse("display_bookmarks",args=(id, )))
+    return HttpResponseRedirect(reverse("add_bookmarks",args=(id, )))
 
 def display_bookmarks(request):
     user = request.user
     bookmarks = user.bookmarks.all()
     all_posts = Post.objects.all().order_by("-time")
-    paginator = Paginator(all_posts, 10)
+    paginator = Paginator(all_posts, 5)
     page_number = request.GET.get('page', 1)
     page_posts = paginator.get_page(page_number)
     return render(request, "network/bookmarks.html", {

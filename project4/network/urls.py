@@ -5,10 +5,9 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("bookmarks/<int:post_id>", views.bookmarks, name="bookmarks"),
-    path("remove_bookmarks/<int:id>", views.remove_bookmarks, name="remove_bookmarks"),
+    path("bookmarks", views.display_bookmarks, name="display_bookmarks"),
     path("add_bookmarks/<int:id>", views.add_bookmarks, name="add_bookmarks"),
-    path("display_bookmarks", views.display_bookmarks, name="display_bookmarks"),
+    path("remove_bookmarks/<int:id>", views.remove_bookmarks, name="remove_bookmarks"),
     path("edithoot/<int:post_id>", views.edit_hoot, name="edit"),
     path("following", views.following, name="following"),
     path("messages", views.inbox_messages, name="messages"),
