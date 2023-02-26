@@ -50,14 +50,14 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
 def register(request):
     if request.method == "POST":
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         username = request.POST["username"]
         email = request.POST["email"]
 
@@ -72,6 +72,8 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
@@ -112,7 +114,7 @@ def profile(request, username):
     curr_user_follows_this_profile = False
     if request.user.is_authenticated:
         curr_user_follows_this_profile = request.user.following.filter(user=user_profile.id).exists()
-
+    
     user_posts = user_profile.posts.order_by("-time").all()
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
@@ -140,10 +142,8 @@ def edit_hoot(request, post_id):
         body = json.loads(body_unicode)
         content = body['content']
         Post.objects.filter(pk=post_id).update(content=f'{content}')
-
-        # Returns Json Response with content passed back that we can use with JS to update page
+        # Returns Json Response to update page
         return JsonResponse({"message": "Post updated.", "content": content}, status=200)
-
     else:
         return JsonResponse({"error"}, status=400)
 
@@ -155,7 +155,7 @@ def like_post(request, post_id):
         post = Post.objects.get(pk = post_id)
     except Post.DoesNotExist:
         return JsonResponse({"error in views.py"}, status=404)
-    # If the user has liked the post, unlike it
+    # If the user liked the post, unlike it
     if (user.likes.filter(pk=post_id).exists()):
         post.liked_by.remove(user)
         likes_post = False
@@ -165,15 +165,6 @@ def like_post(request, post_id):
     # Update num of likes on post
     likes = post.likes()
     return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)
-
-def random_user(request, username):
-    if request.method == "POST":
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("index"))
-    else:
-        random_user = {}
-        pass
-    return render(request, "network/index.html")
 
 def bookmarks(request):
     if request.method == "GET":
@@ -186,24 +177,22 @@ def remove_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
     data.bookmarked_by.remove(user)
-    return HttpResponseRedirect(reverse("remove_bookmarks",args=(id, )))
+    return HttpResponseRedirect(reverse("index"))
 
 def add_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
     data.bookmarked_by.add(user)
-    return HttpResponseRedirect(reverse("add_bookmarks",args=(id, )))
+    return HttpResponseRedirect(reverse("index"))
 
 def display_bookmarks(request):
     user = request.user
-    bookmarks = user.bookmarks.all()
-    all_posts = Post.objects.all().order_by("-time")
-    paginator = Paginator(all_posts, 5)
+    bookmarks = user.bookmarks.all().order_by("-time")
+    paginator = Paginator(bookmarks, 10)
     page_number = request.GET.get('page', 1)
     page_posts = paginator.get_page(page_number)
     return render(request, "network/bookmarks.html", {
         "bookmarks": bookmarks,
-        "all_posts": all_posts,
         "paginator": paginator,
         "page_number": page_number,
         "page_posts": page_posts,
@@ -211,3 +200,12 @@ def display_bookmarks(request):
 
 def inbox_messages(request):
     return render(request, "network/messages.html")
+
+def random_user(request, username):
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        random_user = {}
+        pass
+    return render(request, "network/index.html")

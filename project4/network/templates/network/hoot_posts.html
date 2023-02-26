@@ -14,7 +14,7 @@
         <!--Hoot edit-->
         {% if user.is_authenticated and user == post.author %}
         <label for="edit"></label>
-        <a><button class="badge badge-light" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}" style="float: right;">Edit</button>
+        <a><button class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}" style="float: right; font-size: 9px;">Edit</button>
         </a>
             <!--Bootstrap Modal Pop-up-->
             <div class="modal" id="modal_edit_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_post_{{ post.id }}_label" aria-hidden="true">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button id="poop" type="button" class="btn btn-primary">Save Edit</button>
+                      <button id="save_edit" type="button" class="btn btn-primary">Save Edit</button>
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@
          <!--  Remove from bookmarks button -->
               <form action="{% url 'remove_bookmarks' id=post.id %}" method="POST" class="d-inline-block" style="float: right;">
           {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-warning btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                  <button type="submit" id="remove_button" class="btn btn btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                     <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
                   </svg></button>
               </form> 
@@ -99,7 +99,7 @@
           <!-- Add to Bookmarks button -->
               <form action="{% url 'add_bookmarks' id=post.id %}" method="POST" class="d-inline-block" style="float: right;">
               {% csrf_token %}
-                  <button type="submit" class="btn btn  btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                  <button type="submit" id="add_button" class="btn btn  btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                   </svg></button>
           {% endif %}

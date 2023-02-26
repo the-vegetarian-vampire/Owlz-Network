@@ -15,20 +15,83 @@
             <img alt="profile picture" height="109" width="65px" href="" style="display: flex; width: 20%;"
             src="{% if user_profile.username == 'john' %}{% static 'network/prof-images/john-2.png' %}{% else %}{% static 'network/images/owl-silhouette.png' %}{% endif %}">
             <div class="row d-flex justify-content-center">
-                <h6 class="col-4">{{ user_profile.posts.count }} hoots</h6>
-                <h6 class="col-4" id="demo">{{ user_profile.followers.count }} followers</h6>
-                <h6 class="col-4">{{ user_profile.following.count }} following </h6>
+                <h6 class="col-4">{{ user_profile.posts.count }} Hoots</h6>
             </div>  
-            <!--Javascript Display List-->
-            <div id="followers-view">{% if user.is_authenticated and user == user_profile %} {{ show_all_followers }} {% endif %}</div>
-            <!--Javascript Display List-->
-            <div id="following-view">{% if user.is_authenticated and user == user_profile %} You are following {{ show_all_following }} {% endif %}</div>
+            
+            <!--Display Followers -->
+            <div class="stat col-xs-4" style="padding-right: 50px;">
+                <p type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal">{{ user_profile.followers.count }} Followers</p>
+                <p class="desc-stat"></p>
+            </div>
+            <!--Display Following -->
+            <div class="stat col-xs-4">
+                <p type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal-2">{{ user_profile.following.count }} Following</p>
+                <p class="desc-stat"></p>
+              </div>
+
+            <!-- Following Modal -->
+            <div class="modal fade" id="exampleModal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel-2">Following</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="show_all_following">
+                            {% for following in show_all_following %}
+                          <div class="user-follow">
+                              <img class="user-photo" src=""/>
+                              <a class="ml-1" href="{% url 'profile' following.user.username %}">{{ following.user }}</a>
+                              {% empty %}
+                        <div class="p-3 mb-4 mx-0 mx-md-3" style="text-align: center;">
+                            Not Following Anyone
+                            <p></p>
+                        <!--Owl gif-->
+                            <div class="text-align center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+                          </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Followers Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Followers</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="followers">
+                            {% for followers in show_all_followers %}
+                          <div class="user-follow">
+                              <img class="user-photo" src=""/>
+                              <a class="ml-1" href="{% url 'profile' followers.user.username %}">{{ followers.user }}</a>
+                              {% empty %}
+                        <div class="p-3 mb-4 mx-0 mx-md-3" style="text-align: center;">
+                            No Followers
+                            <p></p>
+                        <!--Owl gif-->
+                            <div class="text-align center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+                        </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
 
         <div style="justify-content: flex-start;">
         </div>
-        
-        
             <div style="float: left;">{{ user_profile.first_name }} {{ user_profile.last_name }} </div>
             <!--Display Location-->
             <div>
@@ -36,6 +99,7 @@
                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             </svg> Brooklyn, NY
+
             </div>
         <!--Follow/Unfollow Buttons-->
         {% if user.is_authenticated and user != user_profile %}
@@ -78,7 +142,6 @@
 </nav>
 {% endif %}
 <!--Javascript link-->
-<script src="{% static 'network/profile.js' %}"></script>
 <script src="{% static 'network/index.js' %}"></script>
 
 {% endblock %}

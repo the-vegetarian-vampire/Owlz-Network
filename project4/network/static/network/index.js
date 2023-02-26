@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Save post ID from data in element
             let id = element.dataset.id;
             
-            // Make fetch request to update page without full reload
+            // Fetch request to update page without full reload
             fetch(`/likepost/${id}`, {
                 method: "POST"
             })
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     return response.json()
                 }
-                // If response receives an error, reject promise and return an error.
+                // If response receives an error, reject promise and return error.
                 else {
                     return Promise.reject('There has been an error.')
                 }
@@ -72,7 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 // edit post
+document.querySelector('#save_edit').onclick = () => {
+   console.log("onclick success")
+}
 
+// fetch(`/edit/{$id}`,)
 
 
 });
