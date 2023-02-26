@@ -27,7 +27,18 @@ a:hover {
   background-color: #0d6efd;
   border-radius: 10%;
   color: white;
+  font-weight: bold;
+  border-radius: 999px;
 }
+
+#unfollowButton {
+  border-color: black;
+  border-radius: 10%;
+  color: black;
+  font-weight: bold;
+  border-radius: 999px;
+}
+
 
 .likeicon  {
    color: red;

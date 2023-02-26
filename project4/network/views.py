@@ -114,13 +114,12 @@ def profile(request, username):
     curr_user_follows_this_profile = False
     if request.user.is_authenticated:
         curr_user_follows_this_profile = request.user.following.filter(user=user_profile.id).exists()
-    
     user_posts = user_profile.posts.order_by("-time").all()
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
-    show_all_followers = request.user.followers.all()
-    show_all_following = request.user.following.all()
+    show_all_followers = user_profile.followers.all()
+    show_all_following = user_profile.following.all()
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
         "user_posts": user_profile.posts.order_by("-time").all(),
@@ -182,8 +181,8 @@ def remove_bookmarks(request, id):
 def add_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
-    data.bookmarked_by.add(user)
-    return HttpResponseRedirect(reverse("index"))
+    update_bookmarks = data.bookmarked_by.add(user)
+    return HttpResponseRedirect(reverse("index", update_bookmarks))
 
 def display_bookmarks(request):
     user = request.user

@@ -22,6 +22,7 @@ function updateLikes(id, likes) {
     let likeCount = document.getElementById(`post_likecount_${id}`);
 
     likeCount.innerHTML = likes;
+
 }
 // Likes // @csrf_exempt via views.py
 document.addEventListener('DOMContentLoaded', function() {
