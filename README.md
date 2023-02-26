@@ -52,7 +52,7 @@ Users can view all hoots posted by all users under the `All Posts` tab.
 -----
 
 ## Following
-Users can `follow` other users, and under the `following` tab, view only users they are following. Similarly, a user can `unfollow` on said user's `profile` page.
+Users can `follow` other users, and under the `following` tab, view `Hoots` only users they are following. Similarly, a user can `unfollow` on said user's `profile` page.
 
 -----
 
