@@ -31,7 +31,7 @@ The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contr
 ## Login/Register
 Users can `Register` an account with a specified `first name`, `last name`, `username`, and `password` to Login.
 
-<img width="1200" alt="Screen Shot 2023-02-18 at 11 12 51 PM" src="https://user-images.githubusercontent.com/105305546/219921840-2386bb05-9c16-41b8-9288-519405ff54e0.png">
+<img width="1116" alt="Screen Shot 2023-02-25 at 11 57 16 PM" src="https://user-images.githubusercontent.com/105305546/221393151-5b5ca0e9-884f-46e8-89d1-ad6d608245df.png">
 
 -----
 
@@ -62,6 +62,6 @@ Users can `follow` other users, and under the `following` tab, view `Hoots` only
 -----
 
 ## Data Models
-Using Django Admin and SQLite, the models are rendered to the Django framework alphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
+Using SQLite, the models are rendered to the Django Admin andalphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
 
 <img width="1117" alt="Screen Shot 2023-02-25 at 11 52 13 PM" src="https://user-images.githubusercontent.com/105305546/221393006-408d2d34-590d-4c3e-a6e0-bb578d36fc96.png">
