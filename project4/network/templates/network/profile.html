@@ -76,7 +76,7 @@
           <div class="modal-body"> 
             {% for followers in show_all_followers %}
             <div>
-            <a class="ml-1" href="{% url 'profile' follower.user.user_profile %}">{{ followers.follower }}</a>
+            <a class="ml-1" href="{% url 'profile' followers.follower.username %}">{{ followers.follower }}</a>
           </div>
             {% empty %}
             No Followers
