@@ -51,14 +51,17 @@ Users can view all hoots posted by all users under the `All Posts` tab.
 
 -----
 
-## Following
-Users can `follow` other users, and under the `following` tab, view `Hoots` only users they are following. Similarly, a user can `unfollow` on said user's `profile` page.
-
------
-
 ## Profile
 Users have a profile page, clicking on `Profile` takes a user to the specified user's profile displaying: number of `posts`, `followers` and `following` of the specified user. 
 
 -----
 
+## Following
+Users can `follow` other users, and under the `following` tab, view `Hoots` only users they are following. Similarly, a user can `unfollow` a user via the `profile` page.
+
+-----
+
 ## Data Models
+Using Django Admin and SQLite, the Python models are rendered to the Django framework alphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
+
+<img width="1117" alt="Screen Shot 2023-02-25 at 11 52 13 PM" src="https://user-images.githubusercontent.com/105305546/221393006-408d2d34-590d-4c3e-a6e0-bb578d36fc96.png">
