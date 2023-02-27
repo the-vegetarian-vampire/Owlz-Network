@@ -82,4 +82,4 @@ Using SQLite, the models are rendered to the Django Admin andalphabetically as `
 
 -----
 
-## *Accio* [Youtube Channel!](https://www.youtube.com/channel/UCFMVgLr81G-opGABi2c8-PA) 
+## *Accio*... [Youtube Channel!](https://www.youtube.com/channel/UCFMVgLr81G-opGABi2c8-PA) 
