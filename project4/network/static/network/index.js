@@ -15,27 +15,34 @@ const random = all_placeholders[Math.floor(Math.random() * all_placeholders.leng
 console.log(random);
 
 document.getElementById("hoot").placeholder = random;
+
 });
+
+/* Function to play bird sound upon "HOOT"
+let play = document.getElementById("submit");
+function playSound(){
+    let audio = new Audio("bird.mp3" is this right?);
+    audio.play()
+}
+play.addEventListener("click", playSound)
+*/
 
 // Update likes per post
 function updateLikes(id, likes) {
     let likeCount = document.getElementById(`post_likecount_${id}`);
-
     likeCount.innerHTML = likes;
-
 }
+
 // Likes // @csrf_exempt via views.py
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', event => {
         const element = event.target;
 
-        // If the user clicked on a like icon
+        // Icon click
         if (element.id.startsWith('post_likeicon_')) {
-        
             // Save post ID from data in element
             let id = element.dataset.id;
-            
-            // Fetch request to update page without full reload
+            // Fetch request to update page without reload
             fetch(`/likepost/${id}`, {
                 method: "POST"
             })
@@ -43,23 +50,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     return response.json()
                 }
-                // If response receives an error, reject promise and return error.
                 else {
-                    return Promise.reject('There has been an error.')
+                    return Promise.reject('Error.')
                 }
             }).then(function(data) {
-                
-                // Saving data from response
+                // Save data from response
                 const likes = data.likesCount;
                 const likesPost = data.likesPost;
-
                 // Like icon on page
                 let likeIcon = document.getElementById(`post_likeicon_${id}`);
-                
-                // Update num of likes on page
+                // Update num of likes
                 updateLikes(id, likes)
-
-                // Update like icon
+                // update icon
                 if (likesPost) {
                     likeIcon.className = 'likeicon fa-heart fas';
                 } else {
@@ -72,12 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 })
 
-// edit post
-document.querySelector('#save_edit').onclick = () => {
-   console.log("onclick success")
-}
+// Edit post
 
 // fetch(`/edit/{$id}`,)
 
 
 });
+

@@ -7,32 +7,52 @@
 
 <!--Profile user header-->
 <div class="container">
-  <div class="col-12 col-lg-12 border my-2 p-4 bg-white text-center box-shadow" style="border-radius: 10px; box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);">
+  <div class="col-12 col-lg-12 border my-2 p-4 bg-white box-shadow" style="border-radius: 10px; box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);">
     <section class="container">
       <!--Image-->
-        <img alt="profile picture" height="109" width="60px" href="" style="display: flex; width: 20%;"
+        <img alt="profile picture" height="109" width="109px" href="" style="display: inline; margin-right: 3.5rem; margin-bottom: 1rem;"
         src="{% if user_profile.username == 'john' %}{% static 'network/prof-images/john-2.png' %}
         {% else %}
         {% static 'network/images/owl-silhouette.png' %}
         {% endif %}">
       <!--Display Num Hoots -->
-        <span>
-            <p>{{ user_profile.posts.count }} Hoots</p>
-        </span>  
+      <span style="display: inline; padding: 1.5rem; font-weight: bold;">
+          {{ user_profile.posts.count }} Hoots
+      </span>  
       <!--Display Followers -->
-      <span>
-          <p type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal">{{ user_profile.followers.count }} Followers</p>
+      <span style="display: inline; padding: 1.5rem; font-weight: bold;" type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal">
+        {{ user_profile.followers.count }} Followers
       </span>
       <!--Display Following -->
-      <span>
-          <p type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal-2">{{ user_profile.following.count }} Following</p>
+      <span style="display: inline; padding: 1.5rem; font-weight: bold;" type="button" class="number-stat" data-toggle="modal" data-target="#exampleModal-2">
+        {{ user_profile.following.count }} Following
       </span>
+
       <!-- Name and Username -->
-      <div style="float: left;">{{ user_profile.first_name }} {{ user_profile.last_name }} 
+      <div>
+        <span>
+        {{ user_profile.first_name }} {{ user_profile.last_name }} 
         <br>
         <small class="muted-text">@{{ user_profile.username }}</small>
+        <br>
+        <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ user_profile.date_joined }}</small>
+      </span>
+        {% if user.is_authenticated and user != user_profile %}
+        <!--Follow/Unfollow Buttons-->
+        <span style="float: right;">
+          <form action="{% url 'profile' user_profile.username %}" method="POST">
+            {% csrf_token %}
+            {% if following_profile %} 
+            <input type="submit" value="Following" name="unfollow_button" class="btn following-button" id="unfollowButton">
+            {% else %}
+            <input type="submit" value="Follow" name="follow_button" class="btn follow_button" id="followButton">
+            {% endif %}
+          </form>
+        </span>
+        {% endif %}
       </div>
-    </section>
+      
+      </section>
 
     {% if user.is_authenticated %}
     <!-- Show All Following Modal -->
@@ -45,7 +65,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body"> 
+          <div class="modal-body text-center"> 
             {% for following in show_all_following %}
             <div>
             <a class="ml-1" href="{% url 'profile' following.user.username %}">{{ following.user }}</a>
@@ -73,7 +93,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body"> 
+          <div class="modal-body text-center"> 
             {% for followers in show_all_followers %}
             <div>
             <a class="ml-1" href="{% url 'profile' followers.follower.username %}">{{ followers.follower }}</a>
@@ -89,20 +109,6 @@
           </div>
         </div>
       </div>
-    </div>
-    {% endif %}
-       
-    {% if user.is_authenticated and user != user_profile %}
-    <!--Follow/Unfollow Buttons-->
-    <div style="float: right">
-      <form action="{% url 'profile' user_profile.username %}" method="POST">
-        {% csrf_token %}
-        {% if following_profile %} 
-        <input type="submit" value="Following" name="unfollow_button" class="btn following-button" id="unfollowButton">
-        {% else %}
-        <input type="submit" value="Follow" name="follow_button" class="btn follow_button" id="followButton">
-        {% endif %}
-      </form>
     </div>
     {% endif %}
 

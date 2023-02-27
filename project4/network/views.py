@@ -26,9 +26,19 @@ def index(request):
         paginator = Paginator(all_posts, 10)
         page_number = request.GET.get('page', 1)
         page_posts = paginator.get_page(page_number)
+        """
+        # remove bookmark
+        data = Post.objects.get(pk=id)
+        user = request.user
+        remove_bookmark = data.bookmarked_by.remove(user)
+        # add bookmark
+        add_bookmark = data.bookmarked_by.add(user)
+        """
         return render(request, "network/index.html", {
             "all_posts": all_posts,
             "page_posts": page_posts,
+             #"remove_bookmark": remove_bookmark,
+             #"add_bookmark": add_bookmark,
         })
 
 def login_view(request):
