@@ -79,3 +79,7 @@ Under the `following` tab, user's can view `Hoots` only from users they are foll
 Using SQLite, the models are rendered to the Django Admin andalphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
 
 <img width="1117" alt="Screen Shot 2023-02-25 at 11 52 13 PM" src="https://user-images.githubusercontent.com/105305546/221393006-408d2d34-590d-4c3e-a6e0-bb578d36fc96.png">
+
+-----
+
+*Accio* [Youtube Channel!](https://www.youtube.com/channel/UCFMVgLr81G-opGABi2c8-PA) 
