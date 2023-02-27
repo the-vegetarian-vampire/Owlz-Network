@@ -56,6 +56,10 @@ Clicking on the `Profile` tab takes a user to the specified profile displaying: 
 
 <img width="1146" alt="Screen Shot 2023-02-27 at 5 27 14 PM" src="https://user-images.githubusercontent.com/105305546/221701004-caff47c4-609a-420c-ad16-6298326eb527.png">
 
+Clicking either `Followers` or `Following` will display a Modal pop-up window displaying those users.
+
+<img width="1146" alt="Screen Shot 2023-02-27 at 5 36 03 PM" src="https://user-images.githubusercontent.com/105305546/221701878-6d749d17-4fc0-4d88-874c-13686ce37795.png">
+
 -----
 
 ## Following
