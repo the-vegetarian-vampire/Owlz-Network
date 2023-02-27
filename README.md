@@ -69,6 +69,10 @@ Clicking either `Followers` or `Following` will display a Modal pop-up window di
 ## Following
 Users can `follow` other users, and under the `following` tab, view `Hoots` only users they are following. Similarly, a user can `unfollow` a user via the `profile` page.
 
+<img width="1147" alt="Screen Shot 2023-02-27 at 5 49 05 PM" src="https://user-images.githubusercontent.com/105305546/221704704-d50f2d5a-cce3-45a2-94f4-93840015db91.png">
+
+<img width="1147" alt="Screen Shot 2023-02-27 at 5 50 28 PM" src="https://user-images.githubusercontent.com/105305546/221705107-b7182a94-6bcf-4c60-89cd-7b1e73a398d0.png">
+
 -----
 
 ## Data Models
