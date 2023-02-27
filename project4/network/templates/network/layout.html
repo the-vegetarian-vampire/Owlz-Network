@@ -113,6 +113,7 @@
                         <!--Profile pics per created accounts-->
                             <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
                             src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+                            {% elif user.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
                             {% elif user.username == 'MissPrefect' %}{% static 'network/prof-images/Hermione.png' %}
                             {% elif user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
                             {% elif user.username == 'Should_not_have_said_that' %}{% static 'network/prof-images/Hagrid.png' %}

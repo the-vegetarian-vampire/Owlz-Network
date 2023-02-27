@@ -71,16 +71,26 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body text-center"> 
+          <div class="modal-body"> 
             {% for following in show_all_following %}
-            <div>
-            <a class="ml-1" href="{% url 'profile' following.user.username %}">{{ following.user }}</a>
+            <div style="margin-top: .5rem;">
+              <img alt="profile picture" height="44" width="50px" href="{% url 'index' %}"
+              src="{% if following.user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+              {% elif following.user.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+              {% elif following.user.first_name == 'Hermione' %}{% static 'network/prof-images/Hermione.png' %}
+              {% elif following.user.first_name == 'Ron' %}{% static 'network/prof-images/ron.png' %}
+              {% elif following.user.first_name == 'Hagrid' %}{% static 'network/prof-images/Hagrid.png' %}
+              {% elif following.user.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+              {% else %}
+              {% static 'network/images/owl-silhouette.png' %}
+              {% endif %}">
+            <span style="align-content: flex-end">&nbsp; <a href="{% url 'profile' following.user.username %}">{{ following.user.first_name }}</a>@{{ following.user }}</span>
           </div>
             {% empty %}
-            Not Following Anyone
+            <p class="text-center">Not Following Anyone</p>
             <p></p>
             <!--Owl gif-->
-            <div class="text-align center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+            <div class="text-center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
             {% endfor %}
           </div>
           <div class="modal-footer">
@@ -99,16 +109,26 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body text-center"> 
+          <div class="modal-body"> 
             {% for followers in show_all_followers %}
-            <div>
-            <a class="ml-1" href="{% url 'profile' followers.follower.username %}">{{ followers.follower }}</a>
-          </div>
+            <div style="margin-top: 1rem;">
+              <img alt="profile picture" height="44" width="50px" href="{% url 'index' %}"
+              src="{% if followers.follower.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+              {% elif followers.follower.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+              {% elif followers.follower.first_name == 'Hermione' %}{% static 'network/prof-images/Hermione.png' %}
+              {% elif followers.follower.first_name == 'Ron' %}{% static 'network/prof-images/ron.png' %}
+              {% elif followers.follower.first_name == 'Hagrid' %}{% static 'network/prof-images/Hagrid.png' %}
+              {% elif followers.follower.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+              {% else %}
+              {% static 'network/images/owl-silhouette.png' %}
+              {% endif %}">
+            <span style="align-content: flex-end">&nbsp; <a href="{% url 'profile' followers.follower.username %}">{{ followers.follower.first_name }}</a>@{{ followers.follower }}</span>
+            </div>
             {% empty %}
-            No Followers
+            <p class="text-center">No Followers</p>
             <p></p>
             <!--Owl gif-->
-            <div class="text-align center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+            <div class="text-center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
             {% endfor %}
           </div>
           <div class="modal-footer">
