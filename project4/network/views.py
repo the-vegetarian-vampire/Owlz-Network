@@ -26,6 +26,10 @@ def index(request):
         paginator = Paginator(all_posts, 10)
         page_number = request.GET.get('page', 1)
         page_posts = paginator.get_page(page_number)
+
+         # Get Random User
+        user_profile = User.objects.all()
+        random_profile= random.choice(user_profile)
         """
         # remove bookmark
         data = Post.objects.get(pk=id)
@@ -37,8 +41,9 @@ def index(request):
         return render(request, "network/index.html", {
             "all_posts": all_posts,
             "page_posts": page_posts,
-             #"remove_bookmark": remove_bookmark,
-             #"add_bookmark": add_bookmark,
+            "random_profile": random_profile,
+             # "remove_bookmark": remove_bookmark,
+             # "add_bookmark": add_bookmark,
         })
 
 def login_view(request):
@@ -209,12 +214,3 @@ def display_bookmarks(request):
 
 def inbox_messages(request):
     return render(request, "network/messages.html")
-
-def random_user(request, username):
-    if request.method == "POST":
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("index"))
-    else:
-        random_user = {}
-        pass
-    return render(request, "network/index.html")

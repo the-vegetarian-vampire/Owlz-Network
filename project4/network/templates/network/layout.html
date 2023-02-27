@@ -149,6 +149,9 @@
                         <img height="44" width="50" src="{% static 'network/prof-images/Hagrid.png' %}" alt="icon"/>
                         <span style="align-content: flex-end">&nbsp; Hagrid</span>
                     </div>
+                    {% if random_profile %}
+                          {{ random_profile }}
+                          {% endif %}
                     <br>
                     <!--Bottom text-->
                     <div>
