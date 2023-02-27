@@ -111,17 +111,15 @@
                         </span>
                         <a class="nav-link" href="{% url 'profile' user.username %}">
                         <!--Profile pics per created accounts-->
-                        <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
-                             src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
-                             {% else %}
-                             {% if user.username == 'MissPrefect' %}{% static 'network/prof-images/Hermione.png' %}
-                             {% else %}
-                             {% if user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
-                             {% else %}
-                             {% if user.username == 'Should_not_have_said_that' %}{% static 'network/prof-images/Hagrid.png' %}
-                             {% else %}
-                             {% static 'network/images/owl-silhouette.png' %}
-                             {% endif %}{% endif %}{% endif %}{% endif %}">
+                            <img alt="profile picture" height="59" width="65px" href="{% url 'index' %}"
+                            src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+                            {% elif user.username == 'MissPrefect' %}{% static 'network/prof-images/Hermione.png' %}
+                            {% elif user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
+                            {% elif user.username == 'Should_not_have_said_that' %}{% static 'network/prof-images/Hagrid.png' %}
+                            {% elif user.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+                            {% else %}
+                            {% static 'network/images/owl-silhouette.png' %}
+                            {% endif %}">
                              <span class="user" style="align-content: flex-end; margin-left: 10px; margin-right: 5px;">{{ user.username }}</span> 
                             </a>
                     </div>
@@ -129,29 +127,44 @@
                     <!--Profile 1-->
                     <div>
                         <img height="44" width="50" src="{% static 'network/prof-images/john-1.png' %}" alt="icon"/>
-                        <span style="align-content: flex-end">&nbsp; John_but_professional</span>
+                        <span style="align-content: flex-end">&nbsp;<a href="{% url 'profile' 'TheProgrammer' %}">John</a>@TheProgrammer</span>
                     </div>
                     <br>
                     <!--Profile 2-->
                     <div>
                         <img height="44" width="50" src="{% static 'network/prof-images/Hermione.png' %}" alt="icon" />
-                        <span style="align-content: flex-end">&nbsp; Hermione</span>
+                        <span style="align-content: flex-end">&nbsp;<a href="{% url 'profile' 'MissPrefect' %}">Hermione</a>@MissPrefect</span>
                     </div>
                     <br>
                     <!--Profile 3-->
                     <div>
                         <img height="44" width="50" src="{% static 'network/images/owl-silhouette.png' %}" alt="icon"/>
-                        <span style="align-content: flex-end">&nbsp; HeWhoMustNotBeNamed</span>
+                        <span style="align-content: flex-end">&nbsp;<a href="{% url 'profile' 'HeWhoMustNotBeNamed' %}">Lord</a>@HeWhoMustNotBeNamed</span>
                     </div>
                     <br>
                     <!--Profile 4-->
                     <div>
                         <img height="44" width="50" src="{% static 'network/prof-images/Hagrid.png' %}" alt="icon"/>
-                        <span style="align-content: flex-end">&nbsp; Hagrid</span>
+                        <span style="align-content: flex-end">&nbsp;<a href="{% url 'profile' 'Should_not_have_said_that' %}">Hagrid</a>@Should_not_have_said_that</span>
                     </div>
-                    {% if random_profile %}
-                          {{ random_profile }}
-                          {% endif %}
+                    <br>
+                    <!--Random Profile-->
+                    <div>
+                        {% if random_profile %}
+                        <!--Profile pics per created accounts-->
+                        <img alt="profile picture" height="44" width="50px" href="{% url 'index' %}"
+                             src="{% if random_profile.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+                             {% elif random_profile.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+                             {% elif random_profile.first_name == 'Hermione' %}{% static 'network/prof-images/Hermione.png' %}
+                             {% elif random_profile.first_name == 'Ron' %}{% static 'network/prof-images/ron.png' %}
+                             {% elif random_profile.first_name == 'Hagrid' %}{% static 'network/prof-images/Hagrid.png' %}
+                             {% elif random_profile.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+                             {% else %}
+                             {% static 'network/images/owl-silhouette.png' %}
+                             {% endif %}">
+                        <span style="align-content: flex-end">&nbsp; <a href="{% url 'profile' random_profile %}">{{ random_profile.first_name }}</a>@{{ random_profile }}</span>
+                        {% endif %}
+                    </div>
                     <br>
                     <!--Bottom text-->
                     <div>

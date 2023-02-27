@@ -8,13 +8,19 @@
 <!--Profile user header-->
 <div class="container">
   <div class="col-12 col-lg-12 border my-2 p-4 bg-white box-shadow" style="border-radius: 10px; box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);">
-    <section class="container">
+    <section class="container" style="margin-bottom: 4rem;">
       <!--Image-->
-        <img alt="profile picture" height="109" width="111px" href="" style="display: inline; margin-right: 3.5rem; margin-bottom: 1rem;"
-        src="{% if user_profile.username == 'john' %}{% static 'network/prof-images/john-2.png' %}
-        {% else %}
-        {% static 'network/images/owl-silhouette.png' %}
-        {% endif %}">
+      <!--Profile pics per created accounts-->
+        <img alt="profile picture" height="109" width="115px" href="" style="display: inline; margin-right: 3.5rem; margin-bottom: 1rem;"
+        src="{% if user_profile.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+            {% elif user_profile.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+            {% elif user_profile.first_name == 'Hermione' %}{% static 'network/prof-images/Hermione.png' %}
+            {% elif user_profile.first_name == 'Ron' %}{% static 'network/prof-images/ron.png' %}
+            {% elif user_profile.first_name == 'Hagrid' %}{% static 'network/prof-images/Hagrid.png' %}
+            {% elif user_profile.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+            {% else %}
+            {% static 'network/images/owl-silhouette.png' %}
+            {% endif %}">
       <!--Display Num Hoots -->
       <span style="display: inline; padding: 1.5rem; font-weight: bold;">
           {{ user_profile.posts.count }} Hoots
@@ -30,16 +36,16 @@
 
       <!-- Name and Username -->
       <div>
-        <span>
+        <span style="float: left;">
         {{ user_profile.first_name }} {{ user_profile.last_name }} 
         <br>
         <small class="muted-text">@{{ user_profile.username }}</small>
         <br>
         <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ user_profile.date_joined }}</small>
-      </span>
         {% if user.is_authenticated and user != user_profile %}
         <!--Follow/Unfollow Buttons-->
-        <span style="float: right;">
+      </span>
+        <span style="float: right; margin-top: 1.5rem; margin-right: .5rem;">
           <form action="{% url 'profile' user_profile.username %}" method="POST">
             {% csrf_token %}
             {% if following_profile %} 
@@ -115,6 +121,7 @@
   </div>
 </div>
 
+ 
 {% include "network/hoot_posts.html" with posts=page_posts %}
 
 <!--Pagination--> 

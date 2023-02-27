@@ -9,13 +9,18 @@
 <div class="card mb-4" style="padding-bottom: 1rem; border-radius: 0; border: none">
     <div class="row no-gutters">
         <div class="col-sm-2" style="padding: .0rem .85rem .85rem;">
+             <!--Profile pics per created accounts-->
             <img class="card-img" style="border-radius: 999px;" alt="profile picture" width="25px"
-                 src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
-                {% else %} 
-                 {% if user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
-                 {% else %}
-                 {% static 'network/images/owl-silhouette.png' %}
-                 {% endif %}{% endif %}">
+            src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+            {% elif user.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+            {% elif user.username == 'MissPrefect' %}{% static 'network/prof-images/Hermione.png' %}
+            {% elif user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
+            {% elif user.username == 'Should_not_have_said_that' %}{% static 'network/prof-images/Hagrid.png' %}
+            {% elif user.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+            {% else %}
+            {% static 'network/images/owl-silhouette.png' %}
+            {% endif %}">
+            <span class="user" style="align-content: flex-end; margin-left: 10px; margin-right: 5px;">
         </div>
 
         <!--text area for new 'hoot'-->

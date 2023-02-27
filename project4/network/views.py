@@ -27,9 +27,9 @@ def index(request):
         page_number = request.GET.get('page', 1)
         page_posts = paginator.get_page(page_number)
 
-         # Get Random User
-        user_profile = User.objects.all()
-        random_profile= random.choice(user_profile)
+        # Get Random User per Layout HTML
+        all_profiles = User.objects.all()
+        random_profile = random.choice(all_profiles)
         """
         # remove bookmark
         data = Post.objects.get(pk=id)
@@ -42,6 +42,7 @@ def index(request):
             "all_posts": all_posts,
             "page_posts": page_posts,
             "random_profile": random_profile,
+            "all_profiles": all_profiles,
              # "remove_bookmark": remove_bookmark,
              # "add_bookmark": add_bookmark,
         })
@@ -108,9 +109,14 @@ def following(request):
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
+    # Get Random User per Layout HTML
+    all_profiles = User.objects.all()
+    random_profile = random.choice(all_profiles)
     return render(request, "network/following.html", {
         "page_posts": page_posts,
-        "followed_users": followed_users
+        "followed_users": followed_users,
+        "all_profiles": all_profiles,
+        "random_profile": random_profile,
 })
 
 def profile(request, username):
@@ -133,8 +139,15 @@ def profile(request, username):
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
+    # Show Bookmarks
+    # user = request.user
+    # bookmarks = user.bookmarks.all().order_by("-time")
+    # Show All Followers and All Following
     show_all_followers = user_profile.followers.all()
     show_all_following = user_profile.following.all()
+    # Get Random User per Layout HTML
+    all_profiles = User.objects.all()
+    random_profile = random.choice(all_profiles)
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
         "user_posts": user_profile.posts.order_by("-time").all(),
@@ -142,6 +155,9 @@ def profile(request, username):
         "following_profile": curr_user_follows_this_profile,
         "show_all_followers": show_all_followers,
         "show_all_following": show_all_following,
+        "all_profiles": all_profiles,
+        "random_profile": random_profile,
+        #"bookmarks": bookmarks,
     })
 
 def edit_hoot(request, post_id):
@@ -205,12 +221,23 @@ def display_bookmarks(request):
     paginator = Paginator(bookmarks, 10)
     page_number = request.GET.get('page', 1)
     page_posts = paginator.get_page(page_number)
+    # Get Random User per Layout HTML
+    all_profiles = User.objects.all()
+    random_profile = random.choice(all_profiles)
     return render(request, "network/bookmarks.html", {
         "bookmarks": bookmarks,
         "paginator": paginator,
         "page_number": page_number,
         "page_posts": page_posts,
+        "all_profiles": all_profiles,
+        "random_profile": random_profile,
     })
 
 def inbox_messages(request):
-    return render(request, "network/messages.html")
+    # Get Random User per Layout HTML
+    all_profiles = User.objects.all()
+    random_profile = random.choice(all_profiles)
+    return render(request, "network/messages.html", {
+        "all_profiles": all_profiles,
+        "random_profile": random_profile,
+    })

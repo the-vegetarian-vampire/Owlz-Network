@@ -1,10 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import random
 
 
 class User(AbstractUser):
     pass
-
+    
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     bookmarked_by = models.ManyToManyField(User, blank=True, null=True, related_name="bookmarks")
