@@ -49,6 +49,8 @@ To `Bookmark`: users click the 🔖 icon to bookmark a hoot which can be viewed 
 ## All Hoots!
 Users can view all hoots posted by all users under the `All Posts` tab.
 
+<img width="1148" alt="Screen Shot 2023-02-27 at 5 41 37 PM" src="https://user-images.githubusercontent.com/105305546/221702681-b812ddbf-186e-4e6a-973a-5f0621154f82.png">
+
 -----
 
 ## Profile
