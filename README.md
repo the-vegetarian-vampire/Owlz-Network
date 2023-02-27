@@ -52,7 +52,9 @@ Users can view all hoots posted by all users under the `All Posts` tab.
 -----
 
 ## Profile
-Users have a profile page, clicking on `Profile` takes a user to the specified user's profile displaying: number of `posts`, `followers` and `following` of the specified user. 
+Clicking on the `Profile` tab takes a user to the specified profile displaying: number of `Hoots`, `Followers` and `Following`. 
+
+<img width="1146" alt="Screen Shot 2023-02-27 at 5 27 14 PM" src="https://user-images.githubusercontent.com/105305546/221701004-caff47c4-609a-420c-ad16-6298326eb527.png">
 
 -----
 
