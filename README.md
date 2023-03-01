@@ -20,11 +20,12 @@ The site makes use of [Django's](https://docs.djangoproject.com/en/4.1/ref/contr
 -----
 
 ### To Run:
-1. Pip install `Django`
-2. In the terminal, cd into the project4 directory.
-3. Run `python3 manage.py makemigrations network` to make migrations for the network app.
-4. Run `python3 manage.py migrate` to apply migrations to the database.
-5. Run `python3 manage.py runserver` to start the Django web server and visit the website in the browser.
+1. Pip3 install `Django`
+2. Pip3 install `django-avatar`
+3. In the terminal, cd into the project4 directory.
+4. Run `python3 manage.py makemigrations network` to make migrations for the network app.
+5. Run `python3 manage.py migrate` to apply migrations to the database.
+6. Run `python3 manage.py runserver` to start the Django web server and visit the website in the browser.
 
 -----
 
@@ -76,7 +77,7 @@ Under the `following` tab, user's can view `Hoots` only from users they are foll
 -----
 
 ## Data Models
-Using SQLite, the models are rendered to the Django Admin andalphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
+Using SQLite, the models are rendered to the Django Admin alphabetically as `Comments`, `Followers`, `Posts`, and `Users`.
 
 <img width="1117" alt="Screen Shot 2023-02-25 at 11 52 13 PM" src="https://user-images.githubusercontent.com/105305546/221393006-408d2d34-590d-4c3e-a6e0-bb578d36fc96.png">
 
