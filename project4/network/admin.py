@@ -3,7 +3,8 @@ from .models import User, Post, Followers, Comment
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("username", "first_name", "last_name")
+    list_display = ("username", "first_name", "last_name", "bio")
+    search_fields = ('avatar',)
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ("author", "content", "time", "likes", "bookmarks")

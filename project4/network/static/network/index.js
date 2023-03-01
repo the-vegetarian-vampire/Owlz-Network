@@ -16,16 +16,19 @@ console.log(random);
 
 document.getElementById("hoot").placeholder = random;
 
-});
-
-/* Function to play bird sound upon "HOOT"
+//Function to play *bird* sound upon "HOOT"
+/*
 let play = document.getElementById("submit");
 function playSound(){
-    let audio = new Audio("bird.mp3" is this right?);
+    let audio = new Audio('bird.mp3');
     audio.play()
 }
 play.addEventListener("click", playSound)
 */
+
+});
+
+
 
 // Update likes per post
 function updateLikes(id, likes) {
@@ -74,10 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 })
 
-// Edit post
-
-// fetch(`/edit/{$id}`,)
+// Edit Hoot
 
 
 });
+
+
+// Bookmark Hoot
 

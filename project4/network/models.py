@@ -1,11 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import random
 
+"""
+def user_directory_path(instance, filename):
+    return 'users/avatars/{0}{1}'.format(instance.user.id, filename)
+"""
 
 class User(AbstractUser):
-    pass
-    
+    # avatar_image = models.ImageField(
+       # upload_to=user_directory_path, default='user/avatar.jpg')
+    bio = models.TextField(max_length=280, blank=True)
+
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     bookmarked_by = models.ManyToManyField(User, blank=True, null=True, related_name="bookmarks")
@@ -30,7 +35,7 @@ class Followers(models.Model):
         return f"{self.follower} follows {self.user}"
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="post_comment")
+    post_comment = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="post_comment")
     comment_author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="comment_author")
     message = models.CharField(max_length=280)
     time = models.DateTimeField(auto_now_add=True)

@@ -1,10 +1,12 @@
 
 from django.urls import path
+from django.urls import include
 
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path('avatar/', include('avatar.urls')),
     path("bookmarks", views.display_bookmarks, name="display_bookmarks"),
     path("add_bookmarks/<int:id>", views.add_bookmarks, name="add_bookmarks"),
     path("remove_bookmarks/<int:id>", views.remove_bookmarks, name="remove_bookmarks"),

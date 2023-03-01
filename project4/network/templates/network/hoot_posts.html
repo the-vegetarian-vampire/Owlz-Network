@@ -39,10 +39,10 @@
         {% else %}
 
           <!--Todo--> 
-          <!-- Dots -->
-                  <span style="float: right;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                      <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3  1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          <!--Dots-->
+              <span style="float: right;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3  1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                   </svg>
               </span>
               {% endif %}
@@ -50,7 +50,7 @@
       
         <!--Hoot content-->
         <div id="post_contentgroup_{{ post.id }}">
-            <p id="post_content_{{ post.id }}" class="mb-2">{{ post.content }}</p>
+          <p id="post_content_{{ post.id }}" class="mb-2">{{ post.content }}</p>
         </div>
         
         <!--Likes-->
@@ -58,7 +58,7 @@
             {% if user.is_authenticated %}
             <i id="post_likeicon_{{ post.id }}" data-id="{{ post.id }}" class="likeicon likeicon-user fa-heart {% if user in post.liked_by.all %}fas{% else %}far{% endif %}"></i>
                 {% else %}
-                <i class="likeicon fa-heart {% if post.likes != 0 %}fas{% else %}far{% endif %}"></i>
+            <i class="likeicon fa-heart {% if post.likes != 0 %}fas{% else %}far{% endif %}"></i>
                 {% endif %}
                 &nbsp;
               <span id="post_likecount_{{ post.id }}" style="font-size: 14px;">{{ post.likes }}</span>
