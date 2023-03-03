@@ -1,11 +1,16 @@
-document.querySelector('#followers-view').style.display = 'none';
-document.querySelector('#following-view').style.display = 'none';
+// Hides edit profile form
+document.querySelector('#bio').style.display = 'none';
 
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    display = document.getElementById("demo");
-    display.addEventListener('click').style.display = 'block'
-    
+    /*
+
+    ... if else statement...
+    const edit_profile = document.querySelector('#bio')
+    edit_profile.onclick = () => {
+        document.querySelector('#bio').style.display = 'block';
+    }
+    */
 
 });

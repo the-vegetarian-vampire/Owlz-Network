@@ -1,6 +1,6 @@
 {% load humanize %}
 {% load static %}
-
+{% load avatar_tags %}
 
 <!--All Hoots-->
     {% for post in posts %}
@@ -10,34 +10,14 @@
             <a href="{% url 'profile' post.author.username %}">
                 <strong>{{ post.author.first_name }} </strong> <a class="text-muted">@{{ post.author }}</a>
             </a>
-            <small class="text-muted">• {{ post.time|naturaltime }}</small> 
+            <small class="text-muted" id="time_of_post">• {{ post.time|naturaltime }}</small> 
 
-        <!--Hoot edit-->
         {% if user.is_authenticated and user == post.author %}
-        <label for="edit"></label>
-        <a><button class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}" style="float: right; font-size: 9px;">Edit</button>
+        <!--Edit Hoot-->
+        <a><button class="btn btn-outline-dark btn-sm" data-postid="{{ post.id }}" style="float: right; font-size: 9px; margin-right: .4rem">Edit</button>
         </a>
-            <!--Bootstrap Modal Pop-up-->
-            <div class="modal" id="modal_edit_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_post_{{ post.id }}_label" aria-hidden="true">
-                <div class="modal-dialog"> 
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Edit Hoot</h4>
-                      <img class="editowl" src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="8%" style="float: right;" data-dismiss="modal">
-                    </div>
-                    <!--Modal body-->
-                    <div class="modal-body">
-                      <textarea rows="4" id="textarea_{{ post.id }}" class="form-control" name="content">{{ post.content }}</textarea>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button id="save_edit" type="button" class="btn btn-primary">Save Edit</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        {% else %}
 
+        {% else %}
           <!--Todo--> 
           <!--Dots-->
               <span style="float: right;">
@@ -45,8 +25,8 @@
                   <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3  1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                   </svg>
               </span>
-              {% endif %}
-          </div>
+        {% endif %}
+        </div>
       
         <!--Hoot content-->
         <div id="post_contentgroup_{{ post.id }}">
@@ -63,8 +43,6 @@
                 &nbsp;
               <span id="post_likecount_{{ post.id }}" style="font-size: 14px;">{{ post.likes }}</span>
             &nbsp; &nbsp; &nbsp;
-
-
         <!--Comments-->
             <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-text" viewBox="0 0 16 16">
                 <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
@@ -84,10 +62,8 @@
                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                 <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
               </svg></span>
-
           <!-- Bookmark buttons -->
           &nbsp; &nbsp;
-          <span>
           {% if user.is_authenticated %}
           {% if bookmarks %}
          <!--  Remove from bookmarks button -->
@@ -107,7 +83,17 @@
           {% endif %}
               </form>
           {% endif %}
-        
+          &nbsp; &nbsp;
+          <!--Delete Hoot-->
+        {% if user.is_authenticated and user == post.author %}
+        <form action="{% url 'delete_post' post.id %}" method="GET" class="d-inline-block" style="float: right;">
+        {% csrf_token %}
+          <button class="btn btn btn-sm" data-postid="{{ post.id }}" id="delete_button" style="font-size: 9px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+              <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+            </svg></button>
+          <form>
+        {% endif %}
         </div>
     </div>
 

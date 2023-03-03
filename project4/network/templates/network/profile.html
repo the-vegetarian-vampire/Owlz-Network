@@ -1,6 +1,7 @@
 {% extends "network/layout.html" %}
 {% load humanize %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block body %}
 <h3 class="text-center" style="font-family: 'Roboto', sans-serif; margin-bottom: 1em;">Profile</h3>
@@ -8,7 +9,7 @@
 <!--Profile user header-->
 <div class="container">
   <div class="col-12 col-lg-12 border my-2 p-4 bg-white box-shadow" style="border-radius: 10px; box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);">
-    <section class="container" style="margin-bottom: 4rem;">
+    <section class="container" style="margin-bottom: 9rem;">
       <!--Image-->
       <!--Profile pics per created accounts-->
         <img alt="profile picture" height="109" width="115px" href="" style="display: inline; margin-right: 3.5rem; margin-bottom: 1rem;"
@@ -41,9 +42,67 @@
         <br>
         <small class="muted-text">@{{ user_profile.username }}</small>
         <br>
-        <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ user_profile.date_joined }}</small>
-        {% if user.is_authenticated and user != user_profile %}
+
+
+        <!--Profile Bio Form-->
+        {% if user.is_authenticated and user == user_profile %}
+        <div class="col-md-9" id="bio">
+          <form action="{% url 'profile' user_profile.username %}" method="post">
+            {% csrf_token %}
+            <div class="form-group" style="margin-bottom: 0">
+              <label for="bio" style="display: none"></label>
+                <textarea
+                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                class="form-control"
+                id="bio"
+                rows="1"
+                maxlength="140"
+                name="bio"
+                placeholder="Bio"></textarea>
+              </div>
+            <input class="post-submit btn btn-dark" id="bio" type="submit" value="Save" style="margin-bottom: 5px; margin-top: 5px; border-radius: 35px; padding-left: 20px; padding-right: 20px; font-weight: bold; float: right;">
+          </form>
+        </div>
+        {% endif %}
+
+         <!--Profile Bio-->
+         {% if user_profile.bio %}
+        <div style="margin-top: 1rem;">{{ bio }}</div>
+        {% endif %}
+        
+        <div style="margin-top: .6rem;">
+          <!--Location-->
+          {% if user_profile.location %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16" style="margin-left: -8px; margin-bottom: 2px;">
+            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
+          {{ location }} 
+          &nbsp; 
+          {% endif %}
+          <!--Website-->
+          {% if user_profile.website %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+            <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+            <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+          </svg>
+          <a href="{{ user_profile.website }}">{{ website }}</a>
+          &nbsp; 
+          {% endif %}
+          {% if user_profile.dob %}
+          <!--DOB-->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-balloon" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 9.984C10.403 9.506 12 7.48 12 5a4 4 0 0 0-8 0c0 2.48 1.597 4.506 4 4.984ZM13 5c0 2.837-1.789 5.227-4.52 5.901l.244.487a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3.177 3.177 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.244-.487C4.789 10.227 3 7.837 3 5a5 5 0 0 1 10 0Zm-6.938-.495a2.003 2.003 0 0 1 1.443-1.443C7.773 2.994 8 2.776 8 2.5c0-.276-.226-.504-.498-.459a3.003 3.003 0 0 0-2.46 2.461c-.046.272.182.498.458.498s.494-.227.562-.495Z"/>
+            </svg>
+          {{ dob }}
+          {% endif %}
+        </div>
+        
+        <!--Profile Cake Day/Join Date-->
+        <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true" style="margin-top: .9rem; margin-right: .2rem; margin-left: -4px;"></i> {{ user_profile.date_joined }}</small>
+        
         <!--Follow/Unfollow Buttons-->
+        {% if user.is_authenticated and user != user_profile %}
       </span>
         <span style="float: right; margin-top: 1.5rem; margin-right: .5rem;">
           <form action="{% url 'profile' user_profile.username %}" method="POST">
@@ -54,14 +113,18 @@
             <input type="submit" value="Follow" name="follow_button" class="btn follow_button" id="followButton">
             {% endif %}
           </form>
+          {% else %}
+          <!--Edit Profile Button-->
         </span>
-        {% endif %}
+        <span style="float: right;">
+          <input type="submit" value="Edit Profile" name="edit_profile" class="btn btn-dark btn-sm" id="ProfileModal" data-toggle="modal" data-target="#ProfileModal" style="border-radius: 999px; font-weight: bold;">
+        </span>
+          {% endif %}
       </div>
-      
       </section>
 
-    {% if user.is_authenticated %}
     <!-- Show All Following Modal -->
+    {% if user.is_authenticated %}
     <div class="modal fade" id="exampleModal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -138,10 +201,39 @@
     </div>
     {% endif %}
 
+    {% if user.is_authenticated and user == user_profile %}
+     <!-- Edit Profile Modal -->
+     <div class="modal fade" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="ProfileModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"> 
+            <div style="margin-top: 1rem;">
+              <img alt="profile picture" height="44" width="50px" href="{% url 'index' %}"
+              src="{% static 'network/images/owl-silhouette.png' %}">
+            <span>{{ user_profile.bio }}, {{ user_profile.location }}, {{ user_profile.website }}, {{ user_profile.dob }}</span>
+            </div>
+
+            <p class="text-center"></p>
+            <p></p>
+            <!--Owl gif-->
+            <div class="text-center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
   </div>
 </div>
 
- 
 {% include "network/hoot_posts.html" with posts=page_posts %}
 
 <!--Pagination--> 
@@ -164,7 +256,9 @@
     </ul>
 </nav>
 {% endif %}
+
 <!--Javascript link-->
 <script src="{% static 'network/index.js' %}"></script>
+<script src="{% static 'network/profile.js' %}"></script>
 
 {% endblock %}

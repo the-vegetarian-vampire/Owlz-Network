@@ -17,7 +17,6 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
             <script>
             document.addEventListener('DOMContentLoaded', function () {
-
             });
             </script>
     </head>
@@ -79,11 +78,11 @@
                     {% block body %}
                     {% endblock %}
                 </div>
+                <div>{{ avatar_image }}</div>
 
             <!--Right side-->
             <div class="right-side col-md-4" style="padding: 15px 25px 0 25px;">
             {% if not user.is_authenticated %}
-                <div class="card w-100" style="border-radius: 15px; position: sticky; top: 0;">
                     <div class="card-body">
                         <h5 class="card-title" style="margin-bottom: 4px; text-align: center;"><strong>Owlz!</strong></h5>
                         <p style="text-align: center;">Create a hoot.</p>
@@ -94,6 +93,21 @@
               </div>
             {% else %}
             <div class="card w-100;" style="border-radius: 15px; overflow: hidden; border-color: transparent; position: sticky; top: 0;">
+                <div class="card w-100" style="border-radius: 15px; position: sticky; top: 0;">
+                     
+                    <!-- Searchbar
+                        <div>
+                            <div id="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                            </div>
+                            <form method="get">
+                                <input type="text" name="search-area" value="{{search_input}}" placeholder="Search Owlz">
+                                <input type="submit" value="Search">
+                            </form>
+                        </div>
+                        -->
+                    
                 <div class="card-header" style="font-size: 18px; background-color: rgb(245, 248, 250); padding-left: 16px">
                     <!--User's profile image -->
                     <div style="padding: .2rem .1rem .85rem;">

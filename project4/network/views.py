@@ -37,14 +37,23 @@ def index(request):
         remove_bookmark = data.bookmarked_by.remove(user)
         # add bookmark
         add_bookmark = data.bookmarked_by.add(user)
+        user = User.objects.get(username=request.user)
+        avatar_image = User.objects.filter(user=user)
+        # all comments
+        data = Post.objects.get(pk=id)
+        all_comments = Comment.objects..all()
+        total_comments = all_comments.count()
         """
         return render(request, "network/index.html", {
             "all_posts": all_posts,
             "page_posts": page_posts,
             "random_profile": random_profile,
             "all_profiles": all_profiles,
-             # "remove_bookmark": remove_bookmark,
-             # "add_bookmark": add_bookmark,
+            # "all_comments": all_comments,
+            # "total_comments": total_comments,
+            # "remove_bookmark": remove_bookmark,
+            # "add_bookmark": add_bookmark,
+            # "avatar_image": avatar_image,
         })
 
 def login_view(request):
@@ -119,8 +128,14 @@ def following(request):
         "random_profile": random_profile,
 })
 
+@login_required
 def profile(request, username):
     user_profile = User.objects.get(username=username)
+    bio = user_profile.bio
+    dob = user_profile.dob
+    location = user_profile.location
+    website = user_profile.website
+
     if request.method == "POST":
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
@@ -148,8 +163,17 @@ def profile(request, username):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
+
+    # User Bio
+    # user_bio = request.POST["bio"]
+    # bio = User.objects.create(user_bio=user_bio, User=request.user)
+
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
+        "bio": bio,
+        "dob": dob,
+        "location": location,
+        "website": website,
         "user_posts": user_profile.posts.order_by("-time").all(),
         "page_posts": page_posts,
         "following_profile": curr_user_follows_this_profile,
@@ -157,32 +181,45 @@ def profile(request, username):
         "show_all_following": show_all_following,
         "all_profiles": all_profiles,
         "random_profile": random_profile,
+
+        # "bio": bio,
         #"bookmarks": bookmarks,
     })
 
-def edit_hoot(request, post_id):
-    if request.method != "POST":
-        return JsonResponse({"Request error, 404"}, status=400)
-    try:
-        post = Post.objects.get(pk = post_id)
-    except Post.DoesNotExist:
-        return JsonResponse({"Request error, 404"}, status=404)
-    if request.user == post.author:
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
-        content = body['content']
-        Post.objects.filter(pk=post_id).update(content=f'{content}')
-        # Returns Json Response to update page
-        return JsonResponse({"message": "Post updated.", "content": content}, status=200)
-    else:
-        return JsonResponse({"error"}, status=400)
+@csrf_exempt
+@login_required
+def edit_hoot(request):
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+
+    data = json.loads(request.body)
+    post_id = data.get("post_id", "")
+    post = Post.objects.get(id=post_id)
+
+    content = data.get("content", "")
+    toggle_like = data.get("toggle_like", "")
+    if content:
+        if request.user != post.user:
+            return JsonResponse({"error": "Can only edit your own posts"})
+        post.content = content
+    if toggle_like:
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    post.save()
+    return JsonResponse({"message": "Post edited successfully", "likes_num": str(post.likes.count())}, status=201)
+
 
 @csrf_exempt
 @login_required
 def like_post(request, post_id):
     user = request.user
     try:
-        post = Post.objects.get(pk = post_id)
+        post = Post.objects.get(pk=post_id)
     except Post.DoesNotExist:
         return JsonResponse({"error in views.py"}, status=404)
     # If the user liked the post, unlike it
@@ -196,6 +233,7 @@ def like_post(request, post_id):
     likes = post.likes()
     return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)
 
+@login_required
 def bookmarks(request):
     if request.method == "GET":
         bookmarks = Post.objects.all()
@@ -203,18 +241,21 @@ def bookmarks(request):
             "bookmarks": bookmarks,
             })
 
+@login_required
 def remove_bookmarks(request, id):
-    data = Post.objects.get(pk=id)
     user = request.user
+    data = Post.objects.get(pk=id)
     data.bookmarked_by.remove(user)
     return HttpResponseRedirect(reverse("index"))
 
+@login_required
 def add_bookmarks(request, id):
     data = Post.objects.get(pk=id)
     user = request.user
     update_bookmarks = data.bookmarked_by.add(user)
     return HttpResponseRedirect(reverse("index", update_bookmarks))
 
+@login_required
 def display_bookmarks(request):
     user = request.user
     bookmarks = user.bookmarks.all().order_by("-time")
@@ -233,6 +274,7 @@ def display_bookmarks(request):
         "random_profile": random_profile,
     })
 
+@login_required
 def inbox_messages(request):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
@@ -241,3 +283,48 @@ def inbox_messages(request):
         "all_profiles": all_profiles,
         "random_profile": random_profile,
     })
+
+"""
+def search(request):
+    if request.method == "POST":
+        entry = request.POST['q']
+        search_name = ...(entry)
+        if search_name != None:
+            return render(request, "/.html", {
+            "title": entry,
+            "content": search_name
+            })
+        else:
+            list = []
+            entries = util.list_entries()
+            for item in entries:
+                if entry.lower() in item.lower():
+                    list.append(item)
+            return render(request, "/.html", {
+                "list": list
+                })
+
+                search_input = self.request.GET.get('search-area') or ''
+                if search_input:
+                    ['users']
+"""
+
+def add_comment(request, id):
+    user = request.user
+    post_comment = Post.objects.get(pk=id)
+    message = request.POST['new_comment']
+
+    new_comment = Comment(
+        author=user, 
+        post_comment=post_comment,
+        message=message
+    )
+    new_comment.save()
+    return HttpResponseRedirect(reverse("index",args=(id, )))
+
+def delete_post(request, post_id):
+    delete_post= Post.objects.get(pk=post_id).delete()
+    return render(request, "network/index.html", {
+        "delete_post": delete_post,
+    })
+   

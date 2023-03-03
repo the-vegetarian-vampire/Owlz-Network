@@ -39,7 +39,19 @@ a:hover {
   border-radius: 999px;
 }
 
-
 .fas {
    color: red;
 }
+
+/*
+#search-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  left: -22px;
+  top: 3px;
+
+  Replace with your own image 
+}
+*/

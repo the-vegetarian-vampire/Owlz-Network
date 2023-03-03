@@ -28,8 +28,6 @@ play.addEventListener("click", playSound)
 
 });
 
-
-
 // Update likes per post
 function updateLikes(id, likes) {
     let likeCount = document.getElementById(`post_likecount_${id}`);
@@ -78,7 +76,62 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 // Edit Hoot
+document.querySelectorAll('.btn-outline-dark').forEach(btn => {
+    btn.onclick = function () {
+        btn.style.display = 'none'
+        console.log('Hoot number',btn.dataset.postid)
+        
+        // Hide delete button
+        document.querySelector('#delete_button').style.display = 'none';
 
+        let contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
+        console.log()
+        
+            contentDiv.innerHTML =
+            `<form id="edit-post-form" class="card-text" style="margin-top: 1rem; margin-bottom: 1.6rem">
+                    <div class="form-group" style="margin-bottom: .7rem">
+                        <textarea 
+                            style="overflow: hidden; resize: none"
+                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class="form-control"
+                            id="edit-post-textarea">${contentDiv.innerHTML}</textarea>
+                    </div>
+                    <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" style="float: right; font-size: 11px; margin-right: 4px "/>
+                    <button class="btn btn-outline-dark btn-sm" id="close_button" style="float: right; font-size: 11px; margin-right: .4rem">Close</button>
+                </form>`
+
+                
+                document.querySelector('#close_button').onclick = function () {
+                    btn.style.display = 'block' 
+                }
+
+                document.querySelector('#edit-post-form').onsubmit = () => {
+                    // retrieve data entered by the user
+                    const content = document.querySelector('#edit-post-textarea').value;
+                    const post_id = btn.dataset.postid
+                    console.log("edit value recieved")
+                    fetch('/edit_hoot', {
+                        method: 'PUT',
+                        body: JSON.stringify({content, post_id})
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.error) {
+                                console.log(`Error editing post: ${result.error}`);
+                            } else {
+                                console.log(result.message)
+                                contentDiv.innerHTML = content
+                                btn.style.display = 'block'
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                    return false;
+                }
+    
+    }
+})
 
 });
 

@@ -8,8 +8,13 @@ def user_directory_path(instance, filename):
 
 class User(AbstractUser):
     # avatar_image = models.ImageField(
-       # upload_to=user_directory_path, default='user/avatar.jpg')
-    bio = models.TextField(max_length=280, blank=True)
+       # upload_to=user_directory_path, default='network/static/network/images/owl-silhouette.png')
+    avatar_image = models.ImageField(default='network/static/network/images/owl-silhouette.png')
+    bio = models.TextField(max_length=140, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    location = models.TextField(max_length=30, blank=True)
+    website = models.URLField(blank=True)
+
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
