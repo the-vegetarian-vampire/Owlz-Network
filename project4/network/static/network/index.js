@@ -82,34 +82,34 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
         console.log('Hoot number',btn.dataset.postid)
         
         // Hide delete button
-        document.querySelector('#delete_button').style.display = 'none';
+       hide_delete_button = document.querySelector('#delete_button').style.display = 'none';
 
         let contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
         console.log()
         
-            contentDiv.innerHTML =
-            `<form id="edit-post-form" class="card-text" style="margin-top: 1rem; margin-bottom: 1.6rem">
-                    <div class="form-group" style="margin-bottom: .7rem">
-                        <textarea 
-                            style="overflow: hidden; resize: none"
-                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                            class="form-control"
-                            id="edit-post-textarea">${contentDiv.innerHTML}</textarea>
-                    </div>
-                    <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" style="float: right; font-size: 11px; margin-right: 4px "/>
-                    <button class="btn btn-outline-dark btn-sm" id="close_button" style="float: right; font-size: 11px; margin-right: .4rem">Close</button>
-                </form>`
-
-                
-                document.querySelector('#close_button').onclick = function () {
-                    btn.style.display = 'block' 
-                }
-
-                document.querySelector('#edit-post-form').onsubmit = () => {
-                    // retrieve data entered by the user
+        contentDiv.innerHTML =
+        `<form id="edit-post-form" class="card-text" style="margin-top: 1rem; margin-bottom: 1.6rem">
+        <div class="form-group" style="margin-bottom: .7rem">
+        <textarea 
+        style="overflow: hidden; resize: none"
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        class="form-control"
+        id="edit-post-textarea">${contentDiv.innerHTML}</textarea>
+        </div>
+        <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" style="float: right; font-size: 11px; margin-right: 4px "/>
+        <button class="btn btn-outline-dark btn-sm" id="close_button" style="float: right; font-size: 11px; margin-right: .4rem">Close</button>
+        </form>`
+        
+        // Cancel/Close Button
+        document.querySelector('#close_button').onclick = function () {
+            btn.style.display = 'block' 
+            contentDiv = 'none'
+        }
+               const submit_edit = document.querySelector('#edit-post-form').onsubmit = () => {
+                    // retrieve data by user
                     const content = document.querySelector('#edit-post-textarea').value;
                     const post_id = btn.dataset.postid
-                    console.log("edit value recieved")
+                    console.log("Edit value recieved")
                     fetch('/edit_hoot', {
                         method: 'PUT',
                         body: JSON.stringify({content, post_id})
@@ -129,12 +129,22 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
                         })
                     return false;
                 }
+                 
+                // update post as -- 'edited' --
+                document.querySelector('#time_of_post') = function  () {
+                    if (submit_edit) {
+                        let timeDiv = document.querySelector('#time_of_post')
+                        timeDiv.innerHTML = `
+                        <small class="text-muted" id="time_of_post">• <em>edited</em>{{ post.time|naturaltime }}</small>
+                        `
+                    } else {
+                    }
+                }
     
     }
-})
+    })
 
 });
-
 
 // Bookmark Hoot
 

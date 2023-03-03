@@ -198,20 +198,9 @@ def edit_hoot(request):
     data = json.loads(request.body)
     post_id = data.get("post_id", "")
     post = Post.objects.get(id=post_id)
-
     content = data.get("content", "")
-    toggle_like = data.get("toggle_like", "")
-    if content:
-        if request.user != post.user:
-            return JsonResponse({"error": "Can only edit your own posts"})
-        post.content = content
-    if toggle_like:
-        if request.user in post.likes.all():
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
     post.save()
-    return JsonResponse({"message": "Post edited successfully", "likes_num": str(post.likes.count())}, status=201)
+    return JsonResponse({"message": "Post edited successfully", "content": str(content)}, status=201)
 
 
 @csrf_exempt
