@@ -19,7 +19,7 @@ class User(AbstractUser):
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     bookmarked_by = models.ManyToManyField(User, blank=True, null=True, related_name="bookmarks")
-    content = models.CharField(max_length=10000)
+    content = models.CharField(max_length=280)
     liked_by = models.ManyToManyField(User, blank=True, related_name="likes")
     time = models.DateTimeField(auto_now=True)
 
@@ -40,10 +40,13 @@ class Followers(models.Model):
         return f"{self.follower} follows {self.user}"
 
 class Comment(models.Model):
-    post_comment = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="post_comment")
+    original_post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="post_comment")
     comment_author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="comment_author")
-    message = models.CharField(max_length=280)
+    new_comment = models.CharField(max_length=280)
     time = models.DateTimeField(auto_now_add=True)
+
+    def num_comments(self):
+        return self.new_comment.all().count()
 
     def __str__(self):
         return f"{self.comment_author} commented on {self.post}"

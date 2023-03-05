@@ -43,28 +43,6 @@
         <small class="muted-text">@{{ user_profile.username }}</small>
         <br>
 
-
-        <!--Profile Bio Form-->
-        {% if user.is_authenticated and user == user_profile %}
-        <div class="col-md-9" id="bio">
-          <form action="{% url 'profile' user_profile.username %}" method="post">
-            {% csrf_token %}
-            <div class="form-group" style="margin-bottom: 0">
-              <label for="bio" style="display: none"></label>
-                <textarea
-                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                class="form-control"
-                id="bio"
-                rows="1"
-                maxlength="140"
-                name="bio"
-                placeholder="Bio"></textarea>
-              </div>
-            <input class="post-submit btn btn-dark" id="bio" type="submit" value="Save" style="margin-bottom: 5px; margin-top: 5px; border-radius: 35px; padding-left: 20px; padding-right: 20px; font-weight: bold; float: right;">
-          </form>
-        </div>
-        {% endif %}
-
          <!--Profile Bio-->
          {% if user_profile.bio %}
         <div style="margin-top: 1rem;">{{ bio }}</div>
@@ -113,11 +91,11 @@
             <input type="submit" value="Follow" name="follow_button" class="btn follow_button" id="followButton">
             {% endif %}
           </form>
-          {% else %}
+            {% else %}
           <!--Edit Profile Button-->
         </span>
         <span style="float: right;">
-          <input type="submit" value="Edit Profile" name="edit_profile" class="btn btn-dark btn-sm" id="ProfileModal" data-toggle="modal" data-target="#ProfileModal" style="border-radius: 999px; font-weight: bold;">
+          <input type="submit" value="Edit Profile" name="edit_profile" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#ProfileModal" style="border-radius: 999px; font-weight: bold;">
         </span>
           {% endif %}
       </div>
@@ -212,19 +190,46 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <!--Profile Bio Form-->
           <div class="modal-body"> 
             <div style="margin-top: 1rem;">
-              <img alt="profile picture" height="44" width="50px" href="{% url 'index' %}"
-              src="{% static 'network/images/owl-silhouette.png' %}">
-            <span>{{ user_profile.bio }}, {{ user_profile.location }}, {{ user_profile.website }}, {{ user_profile.dob }}</span>
+              <form action="" method="" enctype="multipart/form-data">
+                 <!--Image/Avatar-->
+                <div>
+                  <img alt="profile picture" height="64" width="70px" href="{% url 'index' %}"
+                  src="{% static 'network/images/owl-silhouette.png' %}">
+                  <input name="file" id="file" type="file" style="margin-left: .8rem;">
+                  <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px; float: right;">Upload</button>
+                </div>
+                <br>
+                 <!--Bio-->
+                <div>
+                  <label for="Bio">Bio:</label>
+                  <textarea name="Bio" id="bio" class="bio_form" value="" rows="4" placeholder="Bio">{{ bio }}</textarea>
+                </div>
+                <br>
+               <!--Location-->
+                <div>
+                  <label for="Location">Location:</label>
+                  <input name="Location" id="Location" class="bio_form" value="{{ location }}" placeholder="Location">
+                </div>
+               <!--Website-->
+               <br>
+                <div>
+                  <label for="url">Website:</label>
+                  <input name="url" id="url" class="bio_form" value="{{ website }}" placeholder="Website">
+                </div>
+               <!--DOB-->
+               <br>
+                <div>
+                  <label>Birth date:</label>
+                  <input name="Dob" id="datePickerId" type="date" class="bio_form" min="1940-01-01" max="2024-01-01" value=" {{ dob }}" placeholder="Date of birth">
+                </div>
+              </form>
             </div>
-
-            <p class="text-center"></p>
-            <p></p>
-            <!--Owl gif-->
-            <div class="text-center"> <img src="{% static 'network/images/owl.gif' %}" alt="owlgif" width="40%"></div>
-          </div>
+          </div> 
           <div class="modal-footer">
+            <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
           </div>
         </div>
       </div>

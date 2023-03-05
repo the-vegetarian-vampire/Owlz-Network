@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (element.id.startsWith('post_likeicon_')) {
             // Save post ID from data in element
             let id = element.dataset.id;
-            // Fetch request to update page without reload
+            // Update page without reload
             fetch(`/likepost/${id}`, {
                 method: "POST"
             })
@@ -82,9 +82,10 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
         console.log('Hoot number',btn.dataset.postid)
         
         // Hide delete button
-       hide_delete_button = document.querySelector('#delete_button').style.display = 'none';
+        hide_delete_button = document.querySelector('#delete_button').disabled = true;
+        hide_delete_button = document.querySelector('#delete_button').style.display = 'none';
 
-        let contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
+        contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
         console.log()
         
         contentDiv.innerHTML =
@@ -94,20 +95,23 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
         style="overflow: hidden; resize: none"
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
         class="form-control"
+        maxlength="280"
         id="edit-post-textarea">${contentDiv.innerHTML}</textarea>
         </div>
-        <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" style="float: right; font-size: 11px; margin-right: 4px "/>
+        <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" maxlength="280" style="float: right; font-size: 11px; margin-right: 4px "/>
         <button class="btn btn-outline-dark btn-sm" id="close_button" style="float: right; font-size: 11px; margin-right: .4rem">Close</button>
         </form>`
         
         // Cancel/Close Button
         document.querySelector('#close_button').onclick = function () {
+            document.querySelector(`#post_content_${btn.dataset.postid}`).style.display = 'block';
             btn.style.display = 'block' 
-            contentDiv = 'none'
+            hide_delete_button = document.querySelector('#delete_button').disabled = false;
+            hide_delete_button = document.querySelector('#delete_button').style.display = 'block';
         }
-               const submit_edit = document.querySelector('#edit-post-form').onsubmit = () => {
+                const submit_edit = document.querySelector('#edit-post-form').onsubmit = () => {
                     // retrieve data by user
-                    const content = document.querySelector('#edit-post-textarea').value;
+                    const content = document.querySelector('#edit-post-textarea').value
                     const post_id = btn.dataset.postid
                     console.log("Edit value recieved")
                     fetch('/edit_hoot', {
@@ -119,9 +123,16 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
                             if (result.error) {
                                 console.log(`Error editing post: ${result.error}`);
                             } else {
-                                console.log(result.message)
+                                console.log(result.message, content)
                                 contentDiv.innerHTML = content
+                                /*
+                                let timeDiv = document.querySelector('#time_of_post')
+                                timeDiv.innerHTML = `
+                                <small class="text-muted" id="time_of_post">• <em>edited</em>{{ post.time|naturaltime }}</small>
+                                `
+                                */
                                 btn.style.display = 'block'
+                                hide_delete_button = document.querySelector('#delete_button').style.display = 'block';
                             }
                         })
                         .catch(err => {
@@ -130,6 +141,7 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
                     return false;
                 }
                  
+                /*
                 // update post as -- 'edited' --
                 document.querySelector('#time_of_post') = function  () {
                     if (submit_edit) {
@@ -138,12 +150,14 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
                         <small class="text-muted" id="time_of_post">• <em>edited</em>{{ post.time|naturaltime }}</small>
                         `
                     } else {
+                        
                     }
+                   
                 }
-    
-    }
+                        */
+   
+            }
     })
-
 });
 
 // Bookmark Hoot

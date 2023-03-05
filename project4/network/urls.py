@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("add_bookmarks/<int:id>", views.add_bookmarks, name="add_bookmarks"),
-    path("add_comment/<int:id>", views.add_comment, name="add_comment"),
+    path("comments/<int:id>", views.comments, name="comments"),
     path("bookmarks", views.display_bookmarks, name="display_bookmarks"),
     path("edit_hoot", views.edit_hoot, name="edit_hoot"),
     path("delete_post/<int:post_id>", views.delete_post, name="delete_post"),

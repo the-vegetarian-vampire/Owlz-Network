@@ -188,6 +188,22 @@ def profile(request, username):
 
 @csrf_exempt
 @login_required
+def settings(request):
+    pass
+    """"
+    if request.method == "POST":
+        profile_pic = request.POST["profile_pic"]
+        header_pic = request.POST["header_pic"]
+        request.user.name = display_name
+        request.user.picture = profile_pic
+        request.user.header = header_pic
+        request.user.save()
+        return HttpResponseRedirect(resolve_url("profile", username=request.user.username))
+    return render(request, "network/settings.html")
+    """
+
+@csrf_exempt
+@login_required
 def edit_hoot(request):
     if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
@@ -199,9 +215,14 @@ def edit_hoot(request):
     post_id = data.get("post_id", "")
     post = Post.objects.get(id=post_id)
     content = data.get("content", "")
+    if content:
+        if request.user != post.author:
+            return JsonResponse({"error": "Can only edit your posts"})
+        if len(content) > 280:
+            return JsonResponse({"error": "Too many Characters"})
+        post.content = content
     post.save()
-    return JsonResponse({"message": "Post edited successfully", "content": str(content)}, status=201)
-
+    return JsonResponse({"message": "Post edited", "content": str(content)}, status=201)
 
 @csrf_exempt
 @login_required
@@ -298,22 +319,24 @@ def search(request):
                     ['users']
 """
 
-def add_comment(request, id):
+def comments(request, id):
     user = request.user
-    post_comment = Post.objects.get(pk=id)
-    message = request.POST['new_comment']
-
+    original_post = Comment.objects.get(pk=id)
+    new_comment = request.POST['new_comment']
     new_comment = Comment(
-        author=user, 
-        post_comment=post_comment,
-        message=message
+        original_post=original_post,
+        comment_author=user, 
+        new_comment=new_comment
     )
     new_comment.save()
-    return HttpResponseRedirect(reverse("index",args=(id, )))
+    return HttpResponseRedirect(reverse("comments",args=(id, )))
 
+@csrf_exempt
+@login_required
 def delete_post(request, post_id):
     delete_post= Post.objects.get(pk=post_id).delete()
     return render(request, "network/index.html", {
         "delete_post": delete_post,
+        
     })
    

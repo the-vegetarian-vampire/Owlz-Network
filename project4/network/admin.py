@@ -13,7 +13,7 @@ class FollowersAdmin(admin.ModelAdmin):
     list_display = ("user", "follower")
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("comment_author", "message", "time")
+    list_display = ("original_post", "new_comment", "comment_author", "time")
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Post, PostAdmin)
