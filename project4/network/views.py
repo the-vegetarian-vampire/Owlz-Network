@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
+from .forms import UserForm
 import json
 import random
 
@@ -163,9 +164,13 @@ def profile(request, username):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
-
+    
+    if request.user.is_authenticated and request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['bio']
+    
     # User Bio
-    # user_bio = request.POST["bio"]
     # bio = User.objects.create(user_bio=user_bio, User=request.user)
 
     return render(request, "network/profile.html", {
@@ -213,7 +218,9 @@ def edit_hoot(request):
 
     data = json.loads(request.body)
     post_id = data.get("post_id", "")
+    time = data.get("time", "")
     post = Post.objects.get(id=post_id)
+    # time = post.get.time
     content = data.get("content", "")
     if content:
         if request.user != post.author:
@@ -336,7 +343,6 @@ def comments(request, id):
 def delete_post(request, post_id):
     delete_post= Post.objects.get(pk=post_id).delete()
     return render(request, "network/index.html", {
-        "delete_post": delete_post,
-        
+        "delete_post": delete_post,     
     })
    

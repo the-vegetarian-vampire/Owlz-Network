@@ -45,7 +45,7 @@
 
          <!--Profile Bio-->
          {% if user_profile.bio %}
-        <div style="margin-top: 1rem;">{{ bio }}</div>
+        <div style="margin-top: 1rem; margin-right: 8rem;">{{ bio }}</div>
         {% endif %}
         
         <div style="margin-top: .6rem;">
@@ -193,7 +193,8 @@
           <!--Profile Bio Form-->
           <div class="modal-body"> 
             <div style="margin-top: 1rem;">
-              <form action="" method="" enctype="multipart/form-data">
+              <form action="{% url 'profile' user_profile.username %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                  <!--Image/Avatar-->
                 <div>
                   <img alt="profile picture" height="64" width="70px" href="{% url 'index' %}"
@@ -225,11 +226,11 @@
                   <label>Birth date:</label>
                   <input name="Dob" id="datePickerId" type="date" class="bio_form" min="1940-01-01" max="2024-01-01" value=" {{ dob }}" placeholder="Date of birth">
                 </div>
-              </form>
-            </div>
-          </div> 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
+              </div>
+            </div> 
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
+            </form>
           </div>
         </div>
       </div>
