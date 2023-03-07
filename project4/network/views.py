@@ -33,6 +33,8 @@ def index(request):
         # Get Random User per Layout HTML
         all_profiles = User.objects.all()
         random_profile = random.choice(all_profiles)
+        # All Users
+        all_users = User.objects.all().count()
         """
         # remove bookmark
         data = Post.objects.get(pk=id)
@@ -52,6 +54,7 @@ def index(request):
             "page_posts": page_posts,
             "random_profile": random_profile,
             "all_profiles": all_profiles,
+            "all_users": all_users,
             # "all_comments": all_comments,
             # "total_comments": total_comments,
             # "remove_bookmark": remove_bookmark,
@@ -124,11 +127,14 @@ def following(request):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
+    # All Users
+    all_users = User.objects.all().count()
     return render(request, "network/following.html", {
         "page_posts": page_posts,
         "followed_users": followed_users,
         "all_profiles": all_profiles,
         "random_profile": random_profile,
+        "all_users": all_users,
 })
  
 @login_required
@@ -154,7 +160,6 @@ def profile(request, username):
         else:
             return HttpResponseRedirect(reverse("profile", args=(username, )))
 
-
     user_follows_profile = False
     if request.user.is_authenticated:
         user_follows_profile = request.user.following.filter(user=user_profile.id).exists()
@@ -175,6 +180,8 @@ def profile(request, username):
     location = user_profile.location
     website = user_profile.website
     dob = user_profile.dob
+    # All Users
+    all_users = User.objects.all().count()
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
         "user_posts": user_profile.posts.order_by("-time").all(),
@@ -188,6 +195,7 @@ def profile(request, username):
         "location": location,
         "website": website,
         "dob": dob,
+        "all_users": all_users,
         #"bookmarks": bookmarks,
         
     })
@@ -285,6 +293,8 @@ def display_bookmarks(request):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
+    # All Users
+    all_users = User.objects.all().count()
     return render(request, "network/bookmarks.html", {
         "bookmarks": bookmarks,
         "paginator": paginator,
@@ -292,6 +302,7 @@ def display_bookmarks(request):
         "page_posts": page_posts,
         "all_profiles": all_profiles,
         "random_profile": random_profile,
+        "all_users": all_users,
     })
 
 @login_required
@@ -299,9 +310,12 @@ def inbox_messages(request):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
+     # All Users
+    all_users = User.objects.all().count()
     return render(request, "network/messages.html", {
         "all_profiles": all_profiles,
         "random_profile": random_profile,
+        "all_users": all_users,
     })
 
 """
@@ -340,12 +354,12 @@ def comments(request, id):
     )
     new_comment.save()
     return HttpResponseRedirect(reverse("comments",args=(id, )))
+"""
 
+"""
 @csrf_exempt
 @login_required
 def delete_post(request, post_id):
-    delete_post= Post.objects.get(pk=post_id).delete()
-    return render(request, "network/index.html", {
-        "delete_post": delete_post,     
-    })
-   
+    if request.user.is_authenticated:
+        delete_post= Post.objects.get(pk=post_id).delete()
+    return HttpResponseRedirect(reverse("index"))

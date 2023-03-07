@@ -13,7 +13,7 @@ class User(AbstractUser):
     bio = models.TextField(max_length=140, blank=True)
     location = models.TextField(max_length=30, blank=True)
     website = models.URLField(blank=True)
-    dob = models.DateField(null=True, default = '', blank=True)
+    dob = models.DateField(null=True, blank=True)
 
 
 class Post(models.Model):
