@@ -75,15 +75,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 })
 
+
+
 // Edit Hoot
-document.querySelectorAll('.btn-outline-dark').forEach(btn => {
+document.querySelectorAll('#edit_button').forEach(btn => {
     btn.onclick = function () {
+        // Hide edit button / disable delete button / hide delete button
         btn.style.display = 'none'
-        console.log('Hoot number',btn.dataset.postid)
-        
-        // Hide delete button
-        hide_delete_button = document.querySelector('#delete_button').disabled = true;
-        hide_delete_button = document.querySelector('#delete_button').style.display = 'none';
+        const delete_button = document.querySelector('#delete_button')
+        delete_button.disabled = true;
+        delete_button.style.display = 'none';
+        console.log('Hoot number',btn.dataset.postid)    
 
         contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
         contentDiv.innerHTML =
@@ -104,19 +106,25 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
         const Close_button = document.querySelector('#close_button').onclick = function () {
             document.querySelector(`#post_content_${btn.dataset.postid}`).style.display = 'block';
             btn.style.display = 'block' 
-            hide_delete_button = document.querySelector('#delete_button').disabled = false;
-            hide_delete_button = document.querySelector('#delete_button').style.display = 'block';
+            delete_button.disabled = false;
+            delete_button.style.display = 'block';
         }
                 const submit_edit = document.querySelector('#edit-post-form').onsubmit = () => {
                     // retrieve data by user
-                    const content = document.querySelector('#edit-post-textarea').value
+                    const content = document.querySelector('#edit-post-textarea').value;
                     const post_id = btn.dataset.postid
                     const update_time = document.querySelector('#time_of_post')
                     console.log("Edit value recieved")
-                    fetch('/edit_hoot', {
-                        method: 'PUT',
-                        body: JSON.stringify({content, post_id})
-                    })
+
+                    if (document.querySelector('#edit-post-textarea').value.length == 0) {
+                        return false; 
+                    } else {
+
+
+                        fetch('/edit_hoot', {
+                            method: 'PUT',
+                            body: JSON.stringify({content, post_id})
+                        })
                         .then(response => response.json())
                         .then(result => {
                             if (result.error) {
@@ -128,20 +136,20 @@ document.querySelectorAll('.btn-outline-dark').forEach(btn => {
                                 <small class="text-muted" id="time_of_post">• <em>edited</em></small>
                                 `
                                 btn.style.display = 'block'
-                                hide_delete_button = document.querySelector('#delete_button').style.display = 'block';
+                                delete_button.style.display = 'block';
                             }
                         })
                         .catch(err => {
                             console.log(err)
                         })
-                    return false;
+                        return false;
+                    }
                 }
             }
         })
-    });
+});
     
     // Bookmark Hoot
-    
     
     /*
     // update post as -- 'edited' --

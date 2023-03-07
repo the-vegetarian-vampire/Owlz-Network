@@ -153,6 +153,8 @@ def profile(request, username):
             request.user.save()
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
+        if "delete_button" in request.POST:
+            return HttpResponseRedirect(reverse("profile", args=(username, )))
         if "unfollow_button" in request.POST:
             Followers.objects.get(user=user_profile, follower=request.user).delete()
         elif "follow_button" in request.POST:
@@ -343,6 +345,7 @@ def search(request):
                     ['users']
 """
 
+@login_required
 def comments(request, id):
     user = request.user
     original_post = Comment.objects.get(pk=id)
@@ -357,9 +360,9 @@ def comments(request, id):
 """
 
 """
-@csrf_exempt
+
 @login_required
 def delete_post(request, post_id):
-    if request.user.is_authenticated:
-        delete_post= Post.objects.get(pk=post_id).delete()
+    if request.user.is_authenticated and "delete_button" in request.POST:
+        delete_post = Post.objects.get(pk=post_id).delete()
     return HttpResponseRedirect(reverse("index"))
