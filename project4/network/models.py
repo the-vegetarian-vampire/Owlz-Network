@@ -11,9 +11,9 @@ class User(AbstractUser):
        # upload_to=user_directory_path, default='network/static/network/images/owl-silhouette.png')
     avatar_image = models.ImageField(default='network/static/network/images/owl-silhouette.png')
     bio = models.TextField(max_length=140, blank=True)
-    dob = models.DateField(null=True, blank=True)
     location = models.TextField(max_length=30, blank=True)
     website = models.URLField(blank=True)
+    dob = models.DateField(null=True, default = '', blank=True)
 
 
 class Post(models.Model):

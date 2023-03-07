@@ -1,0 +1,14 @@
+{% extends "network/layout.html" %}
+{% load humanize %}
+{% load static %}
+{% load avatar_tags %}
+
+{% block body %}
+
+<div>
+    <form action="{% url 'settings' %}" method="POST">
+    {{ form }}
+    <input type="submit">
+</div>
+
+{% endblock %}

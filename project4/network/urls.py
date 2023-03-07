@@ -19,7 +19,7 @@ urlpatterns = [
     path("profile/<str:username>", views.profile, name="profile"),
     path("register", views.register, name="register"),
     path("remove_bookmarks/<int:id>", views.remove_bookmarks, name="remove_bookmarks"),
-    
+    # path("settings", views.settings, name="settings"),
     # path('search/', views.search, name="search"),
    
 ]

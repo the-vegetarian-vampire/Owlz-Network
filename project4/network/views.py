@@ -8,7 +8,9 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
 from .forms import UserForm
+from django.shortcuts import get_object_or_404, render, resolve_url
 import json
 import random
 
@@ -128,16 +130,20 @@ def following(request):
         "all_profiles": all_profiles,
         "random_profile": random_profile,
 })
-
+ 
 @login_required
 def profile(request, username):
     user_profile = User.objects.get(username=username)
-    bio = user_profile.bio
-    dob = user_profile.dob
-    location = user_profile.location
-    website = user_profile.website
-
     if request.method == "POST":
+        new_bio = request.POST["Biography"]
+        new_location = request.POST["home"]
+        new_website = request.POST["url_site"]
+        new_dob = request.POST["birth"]
+        request.user.bio = new_bio
+        request.user.location = new_location
+        request.user.website = new_website
+        request.user.dob = new_dob
+        request.user.save()
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
         if "unfollow_button" in request.POST:
@@ -145,67 +151,63 @@ def profile(request, username):
         elif "follow_button" in request.POST:
             Followers.objects.create(user=user_profile, follower=request.user)
         else:
-            pass
-        return HttpResponseRedirect(reverse("profile", args=(username, )))
+            return HttpResponseRedirect(reverse("profile", args=(username, )))
 
-    curr_user_follows_this_profile = False
+
+    user_follows_profile = False
     if request.user.is_authenticated:
-        curr_user_follows_this_profile = request.user.following.filter(user=user_profile.id).exists()
+        user_follows_profile = request.user.following.filter(user=user_profile.id).exists()
     user_posts = user_profile.posts.order_by("-time").all()
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_posts = paginator.get_page(page_number)
-    # Show Bookmarks
-    # user = request.user
-    # bookmarks = user.bookmarks.all().order_by("-time")
     # Show All Followers and All Following
     show_all_followers = user_profile.followers.all()
     show_all_following = user_profile.following.all()
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
-    
-    if request.user.is_authenticated and request.method == "POST":
-        form = UserForm(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['bio']
-    
-    # User Bio
-    # bio = User.objects.create(user_bio=user_bio, User=request.user)
-
+    # Show Bookmarks
+    # user = request.user
+    # bookmarks = user.bookmarks.all().order_by("-time")
+    bio = user_profile.bio
+    location = user_profile.location
+    website = user_profile.website
+    dob = user_profile.dob
     return render(request, "network/profile.html", {
         "user_profile": user_profile,
-        "bio": bio,
-        "dob": dob,
-        "location": location,
-        "website": website,
         "user_posts": user_profile.posts.order_by("-time").all(),
         "page_posts": page_posts,
-        "following_profile": curr_user_follows_this_profile,
+        "following_profile": user_follows_profile,
         "show_all_followers": show_all_followers,
         "show_all_following": show_all_following,
         "all_profiles": all_profiles,
         "random_profile": random_profile,
-
-        # "bio": bio,
+        "bio": bio,
+        "location": location,
+        "website": website,
+        "dob": dob,
         #"bookmarks": bookmarks,
+        
     })
 
-@csrf_exempt
-@login_required
+"""
 def settings(request):
-    pass
-    """"
-    if request.method == "POST":
-        profile_pic = request.POST["profile_pic"]
-        header_pic = request.POST["header_pic"]
-        request.user.name = display_name
-        request.user.picture = profile_pic
-        request.user.header = header_pic
-        request.user.save()
-        return HttpResponseRedirect(resolve_url("profile", username=request.user.username))
-    return render(request, "network/settings.html")
-    """
+    if request.method == "POST": 
+        form = UserForm(request.POST)
+        if form.is_valid():
+            bio = form.cleaned_data['bio']
+            print(bio)
+            dob = form.cleaned_data['dob']
+            print(dob)
+            location = form.cleaned_data['location']
+            print(location)
+            website = form.cleaned_data['website']
+            print(website)
+            form.save()
+    context = {'form': UserForm}
+    return render(request, "network/profile.html", context)
+"""
 
 @csrf_exempt
 @login_required
