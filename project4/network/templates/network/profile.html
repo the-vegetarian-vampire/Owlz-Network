@@ -197,7 +197,6 @@
             <div style="margin-top: 1rem;">
               <form action="{% url 'profile' user_profile.username %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form }}
                  <!--Image/Avatar-->
                 <div>
                   <img alt="profile picture" height="64" width="70px" href=""
@@ -232,7 +231,7 @@
               </div>
             </div> 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
+              <button type="submit" name="profile_submit_button" method="POST" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
             </form>
           </div>
         </div>

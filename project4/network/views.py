@@ -135,15 +135,16 @@ def following(request):
 def profile(request, username):
     user_profile = User.objects.get(username=username)
     if request.method == "POST":
-        new_bio = request.POST["Biography"]
-        new_location = request.POST["home"]
-        new_website = request.POST["url_site"]
-        new_dob = request.POST["birth"]
-        request.user.bio = new_bio
-        request.user.location = new_location
-        request.user.website = new_website
-        request.user.dob = new_dob
-        request.user.save()
+        if "profile_submit_button" in request.POST:
+            new_bio = request.POST["Biography"]
+            new_location = request.POST["home"]
+            new_website = request.POST["url_site"]
+            new_dob = request.POST["birth"]
+            request.user.bio = new_bio
+            request.user.location = new_location
+            request.user.website = new_website
+            request.user.dob = new_dob
+            request.user.save()
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
         if "unfollow_button" in request.POST:
