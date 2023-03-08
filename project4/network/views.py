@@ -202,24 +202,6 @@ def profile(request, username):
         
     })
 
-"""
-def settings(request):
-    if request.method == "POST": 
-        form = UserForm(request.POST)
-        if form.is_valid():
-            bio = form.cleaned_data['bio']
-            print(bio)
-            dob = form.cleaned_data['dob']
-            print(dob)
-            location = form.cleaned_data['location']
-            print(location)
-            website = form.cleaned_data['website']
-            print(website)
-            form.save()
-    context = {'form': UserForm}
-    return render(request, "network/profile.html", context)
-"""
-
 @csrf_exempt
 @login_required
 def edit_hoot(request):
@@ -343,6 +325,13 @@ def search(request):
                 search_input = self.request.GET.get('search-area') or ''
                 if search_input:
                     ['users']
+
+def search(request, username):
+    user_profile = User.objects.get(username=username)
+    search_input = request.GET('search-area') or ''
+    if search_input:
+        username = username(title__startswith=search_input)
+    return user_profile
 """
 
 @login_required

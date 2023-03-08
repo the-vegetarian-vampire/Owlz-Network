@@ -9,7 +9,7 @@
 <!--Profile user header-->
 <div class="container">
   <div class="col-12 col-lg-12 border my-2 p-4 bg-white box-shadow" style="border-radius: 10px; box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);">
-    <section class="container" style="margin-bottom: 9rem;">
+    <section class="container" style="margin-bottom: .6rem;">
       <!--Image-->
       <!--Profile pics per created accounts-->
         <img alt="profile picture" height="109" width="115px" href="" style="display: inline; margin-right: 3.5rem; margin-bottom: 1rem;"
@@ -39,6 +39,7 @@
       <div>
         <span style="float: left;">
         {{ user_profile.first_name }} {{ user_profile.last_name }} 
+        </span>
         <br>
         <small class="muted-text">@{{ user_profile.username }}</small>
         <br>
@@ -62,7 +63,7 @@
           {% endif %}
           <!--Website-->
           {% if user_profile.website %}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16" style="margin-left: -8px; margin-bottom: 2px;">
             <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
             <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
           </svg>
@@ -71,7 +72,7 @@
           {% endif %}
           {% if user_profile.dob %}
           <!--DOB-->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-balloon" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-balloon" viewBox="0 0 16 16" style="margin-left: -8px; margin-bottom: 2px;">
               <path fill-rule="evenodd" d="M8 9.984C10.403 9.506 12 7.48 12 5a4 4 0 0 0-8 0c0 2.48 1.597 4.506 4 4.984ZM13 5c0 2.837-1.789 5.227-4.52 5.901l.244.487a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3.177 3.177 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.244-.487C4.789 10.227 3 7.837 3 5a5 5 0 0 1 10 0Zm-6.938-.495a2.003 2.003 0 0 1 1.443-1.443C7.773 2.994 8 2.776 8 2.5c0-.276-.226-.504-.498-.459a3.003 3.003 0 0 0-2.46 2.461c-.046.272.182.498.458.498s.494-.227.562-.495Z"/>
             </svg>
           {{ dob }}
@@ -79,12 +80,11 @@
         </div>
         
         <!--Profile Cake Day/Join Date-->
-        <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true" style="margin-top: .9rem; margin-right: .2rem; margin-left: -4px;"></i> {{ user_profile.date_joined }}</small>
+        <small class="muted-text"><i class="fa fa-birthday-cake" aria-hidden="true" style="margin-top: 1.9rem; margin-right: .2rem; margin-left: -4px;"></i> {{ user_profile.date_joined }}</small>
         
         <!--Follow/Unfollow Buttons-->
         {% if user.is_authenticated and user != user_profile %}
-      </span>
-        <span style="float: right; margin-top: 1.5rem; margin-right: .5rem;">
+        <span style="float: right; margin-top: 0; margin-right: .5rem;">
           <form action="{% url 'profile' user_profile.username %}" method="POST">
             {% csrf_token %}
             {% if following_profile %} 
@@ -226,7 +226,7 @@
                <br>
                 <div>
                   <label>Birth date:</label>
-                  <input name="birth" type="date" class="profile_form" value="" placeholder="Date of birth">
+                  <input name="birth" type="date" id="datePickerId" class="profile_form" value="" placeholder="Date of birth">
                 </div>
               </div>
             </div> 
