@@ -95,18 +95,16 @@
             <div class="card w-100;" style="border-radius: 15px; overflow: hidden; border-color: transparent; position: sticky; top: 0;">
                 <div class="card w-100" style="border-radius: 15px; position: sticky; top: 0;">
                      
-                    <!-- Searchbar
-                        <div>
-                            <div id="search-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
-                            </div>
-                            <form method="GET">
-                                <input type="text" name="search-area" value="{{search_input}}" placeholder="Search Owlz">
-                                <input type="submit" value="Search">
-                            </form>
+                    <!-- Searchbar -->
+                    <div class="wrapper" style="width: 100%;">
+                        <div id="search-icon" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="search-icon">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
                         </div>
-                        -->
+                        <form class="search-bar" id="searchbar" onsubmit="return executeQuery();">
+                            <input type="text" class="" name="q" id="id_q_small" placeholder="Search Owlz">
+                        </form>
+                    </div>
                     
                 <div class="card-header" style="font-size: 18px; background-color: rgb(245, 248, 250); padding-left: 16px">
                     <!--User's profile image -->
@@ -195,6 +193,17 @@
             </div>
         </div>
 
+        <!-- Searchbar Javascript -->
+        <script type="text/javascript">
+            function executeQuery(){
+                var query = document.getElementById("id_q_small").value
+                if (query == ""){
+                    query = document.getElementById("id_q_large").value
+                }
+                window.location.replace("{% url 'search_results' %}?q=" + query)
+                return false
+            }
+        </script>
         <!--Javascript for dropdown links and Modal pop-up-->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

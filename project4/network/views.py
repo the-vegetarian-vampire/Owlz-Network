@@ -302,37 +302,22 @@ def inbox_messages(request):
         "all_users": all_users,
     })
 
-"""
-def search(request):
-    if request.method == "POST":
-        entry = request.POST['q']
-        search_name = ...(entry)
-        if search_name != None:
-            return render(request, "/.html", {
-            "title": entry,
-            "content": search_name
-            })
-        else:
-            list = []
-            entries = util.list_entries()
-            for item in entries:
-                if entry.lower() in item.lower():
-                    list.append(item)
-            return render(request, "/.html", {
-                "list": list
-                })
 
-                search_input = self.request.GET.get('search-area') or ''
-                if search_input:
-                    ['users']
+def search_results(request, *args, **kwargs):
+    context = {}
 
-def search(request, username):
-    user_profile = User.objects.get(username=username)
-    search_input = request.GET('search-area') or ''
-    if search_input:
-        username = username(title__startswith=search_input)
-    return user_profile
-"""
+    if request.method == "GET":
+        search_query = request.GET.get("q")
+        if len(search_query) > 0:
+            search_results = User.objects.filter(username__icontains=search_query) #  .filter(first_name__icontains=search_query)  # .distinct() operator eliminates duplicate results 
+            accounts = []
+            print(accounts)
+            for account in search_results:
+                accounts.append((account, True))
+            context['accounts'] = accounts
+            print(context)
+
+    return render(request, "network/search_results.html", context)
 
 @login_required
 def comments(request, id):
@@ -348,8 +333,7 @@ def comments(request, id):
     return HttpResponseRedirect(reverse("comments",args=(id, )))
 """
 
-"""
-
+""" 
 @login_required
 def delete_post(request, post_id):
     if request.user.is_authenticated and "delete_button" in request.POST:

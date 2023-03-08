@@ -52,15 +52,10 @@ a:hover {
 
 }
 
-/*
-#search-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  position: relative;
-  left: -22px;
-  top: 3px;
-
-  Replace with your own image 
+#searchbar {
+  border-radius: 999px;
+  width: 100%;
 }
-*/
+
+
+
