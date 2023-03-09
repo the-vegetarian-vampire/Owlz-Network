@@ -3,7 +3,7 @@
 ## Owlz! 
 *"Create a Hoot!"*
 
-Started as -- Project 4 for Harvard's CS50w Web Programming with Python and JavaScript -- but it became much more!
+Started as -- Project 4 for Harvard's CS50w Web Programming with Python and JavaScript -- but became much more!
 
 📹 `Youtube:` ...TBD
 
