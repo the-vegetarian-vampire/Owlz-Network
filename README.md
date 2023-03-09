@@ -45,6 +45,8 @@ To `Edit`: users click `“Edit”` [on their own posts], make specified changes
 
 To `Bookmark`: users click the 🔖 icon to bookmark a hoot which can be viewed under the `Bookmarks` tab.
 
+To `Delete`: users click the 🗑️ icon to delete a hoot.
+
 <img width="579" alt="Screen Shot 2023-02-27 at 5 45 53 PM" src="https://user-images.githubusercontent.com/105305546/221703745-c80a2432-ce2b-4dd1-92ec-4610ed9aa14b.png">
 
 -----
