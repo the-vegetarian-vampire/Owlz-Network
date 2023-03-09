@@ -1,0 +1,71 @@
+a:hover {
+    color: black;
+  }
+
+.nav-item .nav-item::after{
+  color: black;
+}
+
+.nav-link .nav-link::after {
+  color: black;
+}
+
+.btn-link {
+  cursor: pointer;
+}
+
+.user {
+  color: black;
+}
+
+.editowl {
+  cursor: pointer;
+
+}
+
+#followButton {
+  background-color: #0d6efd;
+  border-radius: 10%;
+  color: white;
+  font-weight: bold;
+  border-radius: 999px;
+}
+
+#unfollowButton {
+  border-color: black;
+  border-radius: 10%;
+  color: black;
+  font-weight: bold;
+  border-radius: 999px;
+}
+
+.fas {
+   color: red;
+}
+
+.profile_form {
+  height: 100%;
+  width: 100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+
+}
+
+/* the searchbar */
+#id_q_small { 
+  border-radius: 999px;
+  width: 95%;
+  padding: .45rem;
+  opacity: 80%;
+  margin-left: 10px;
+  margin-top: 9px;  
+}
+
+/* searchbar placeholder */
+#id_q_small::placeholder {
+  padding-left: 15px;
+  color: black;
+  opacity: 60%;
+
+}
