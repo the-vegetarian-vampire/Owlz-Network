@@ -1,0 +1,113 @@
+{% extends "network/layout.html" %}
+{% load humanize %}
+{% load static %}
+{% load avatar_tags %}
+
+{% block body %}
+<h3 class="text-center" style="font-family: 'Roboto', sans-serif; margin-bottom: 1em;">All Posts</h3>
+{% if user.is_authenticated %}
+<!--User profile image-->
+<div class="card mb-4" style="padding-bottom: 1rem; border-radius: 0; border: none">
+    <div class="row no-gutters">
+        <div class="col-sm-2" style="padding: .0rem .85rem .85rem;">
+             <!--Profile pics per created accounts-->
+            <img class="card-img" style="border-radius: 999px;" alt="profile picture" width="25px"
+            src="{% if user.username == 'johnlawniczak' %}{% static 'network/prof-images/john-2.png' %}
+            {% elif user.username == 'TheProgrammer' %}{% static 'network/prof-images/john-1.png' %}
+            {% elif user.username == 'MissPrefect' %}{% static 'network/prof-images/Hermione.png' %}
+            {% elif user.username == 'UglySweater' %}{% static 'network/prof-images/ron.png' %}
+            {% elif user.username == 'Should_not_have_said_that' %}{% static 'network/prof-images/Hagrid.png' %}
+            {% elif user.first_name == 'Harry' %}{% static 'network/prof-images/harry.png' %}
+            {% else %}
+            {% static 'network/images/owl-silhouette.png' %}
+            {% endif %}">
+            <span class="user" style="align-content: flex-end; margin-left: 10px; margin-right: 5px;">
+        </div>
+
+        <!--text area for new 'hoot'-->
+        <div class="col-md-9">
+            <div class="card-body" style="padding: 0; height: 100%;">
+                <form action="{% url 'index' %}" method="post" id="form_for_hoot">
+                    {% csrf_token %}
+                    <div class="form-group" style="margin-bottom: 0">
+                        <label for="hoot" style="display: none"></label>
+                        <textarea
+                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class="form-control"
+                            id="hoot"
+                            rows="1"
+                            maxlength="280"
+                            name="content"
+                            placeholder=""></textarea>
+                    </div>
+
+                <!--Todos -- Under Hoot Buttons-->
+                    <div style="margin-top: 15px;">
+                        &nbsp;
+                        <!--image-->
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                          </svg>
+                          &nbsp; &nbsp;
+                           <!--list/poll-->
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                          </svg>
+                          &nbsp; &nbsp;
+                          <!--emoji-->
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                          </svg>
+                          &nbsp; &nbsp;
+                          <!--location-->
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                          </svg>
+                          &nbsp; &nbsp;
+                          <!--calendar-->
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-calendar-day" viewBox="0 0 16 16">
+                            <path d="M4.684 11.523v-2.3h2.261v-.61H4.684V6.801h2.464v-.61H4v5.332h.684zm3.296 0h.676V8.98c0-.554.227-1.007.953-1.007.125 0 .258.004.329.015v-.613a1.806 1.806 0 0 0-.254-.02c-.582 0-.891.32-1.012.567h-.02v-.504H7.98v4.105zm2.805-5.093c0 .238.192.425.43.425a.428.428 0 1 0 0-.855.426.426 0 0 0-.43.43zm.094 5.093h.672V7.418h-.672v4.105z"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                          </svg>
+                        </span>
+
+                        <!--Submit button per lecture 5: 114:00 - https://youtu.be/x5trGVMKTdY?t=4442 -->
+                        <!--Todo <audio id="audio" src="{% static 'network/static/sound/bird.mp3' %}" preload="auto"></audio> -->
+                    <input class="post-submit btn btn-primary" id="submit_hoot" type="submit" value="Hoot" style="margin-bottom: 5px; margin-top: 5px; border-radius: 35px; padding-left: 20px; padding-right: 20px; font-weight: bold; float: right;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+    <div style="height: 2rem"></div>
+{% endif %}
+{% include "network/hoot_posts.html" with posts=page_posts %}
+
+<!--Pagination--> 
+{% if page_posts.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination" style="justify-content: center;">
+      {% if page_posts.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_posts.previous_page_number }}">Back</a></li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Back</a></li>
+      {% endif %}
+      <li class="page-item current-item"><span class="current page-link">
+          {{ page_posts.number }} of {{ page_posts.paginator.num_pages }}
+      </span></li>
+      {% if page_posts.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_posts.next_page_number }}">Next</a></li>
+      {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+      {% endif %}
+    </ul>
+</nav>
+{% endif %}
+<script src="{% static 'network/index.js' %}"></script>
+
+{% endblock %}
