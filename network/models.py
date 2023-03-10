@@ -9,7 +9,7 @@ def user_directory_path(instance, filename):
 class User(AbstractUser):
     # avatar_image = models.ImageField(
        # upload_to=user_directory_path, default='network/static/network/images/owl-silhouette.png')
-    #avatar_image = models.ImageField(upload_to='static/network/avatars', default='static/network/images/owl-silhouette.png')
+    avatar_image = models.ImageField(upload_to='static/network/avatars', default='static/network/images/owl-silhouette.png')
     bio = models.TextField(max_length=140, blank=True)
     location = models.TextField(max_length=30, blank=True)
     website = models.URLField(blank=True)

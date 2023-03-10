@@ -1,17 +1,3 @@
-function clearEditView(postId) {
-    // Remove textarea, save button and cancel button
-    document.getElementById(`textarea_${postId}`).remove()
-    document.getElementById(`save_${postId}`).remove()
-    document.getElementById(`cancel_${postId}`).remove()
-
-    // Show content, edit button and no of likes
-    document.getElementById(`post_content_${postId}`).style.display = 'block';
-    document.getElementById(`edit_${postId}`).style.display = 'inline-block';
-    document.getElementById(`post_likes_${postId}`).style.display = 'block';
-
-}
-
-
 document.addEventListener('DOMContentLoaded', function () {
 
 // Default 'Hoot' button disabled per lecture 5: 114:00 - https://youtu.be/x5trGVMKTdY?t=4442 
@@ -39,6 +25,7 @@ function playSound(){
 }
 play.addEventListener("click", playSound)
 */
+
 
 });
 
@@ -91,143 +78,78 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Edit Hoot
-// If the thing the user clicked is the edit button
-if (element.id.startsWith('edit_')) {
-            
-    // Save necessary variables
-    const editButton = element;
-    const postId = editButton.dataset.id;
-    const postText = document.getElementById(`post_content_${postId}`);
+document.querySelectorAll('#edit_button').forEach(btn => {
+    btn.onclick = function () {
+        // Hide edit button / disable delete button / hide delete button
+        btn.style.display = 'none'
+        const delete_button = document.querySelector('#delete_button')
+        delete_button.disabled = true;
+        delete_button.style.display = 'none';
+        console.log('Hoot number',btn.dataset.postid)    
 
-    // Adding prepopulated text area element
-    let textArea = document.createElement('textarea');
-    textArea.innerHTML = postText.innerHTML;
-    textArea.id = `textarea_${postId}`;
-    textArea.className = 'form-control';
-    document.getElementById(`post_contentgroup_${postId}`).append(textArea);
-
-    // Hiding text containing original content
-    postText.style.display = 'none';
-
-    // Hiding likes
-    document.getElementById(`post_likes_${postId}`).style.display = 'none';
-
-    // Remove edit button
-    editButton.style.display = 'none';
-
-    // Adding 'Cancel' button
-    const cancelButton = document.createElement('button');
-    cancelButton.innerHTML = 'Cancel';
-    cancelButton.className = 'btn btn-outline-dark btn-sm';
-    cancelButton.id = `cancel_${postId}`
-
-    // Adding 'Save' button
-    const saveButton = document.createElement('button');
-    saveButton.innerHTML = 'Save';
-    saveButton.className = 'btn green-button btn-sm mt-2 px-2';
-    saveButton.id = `save_${postId}`
-
-    // Add save button to DOM
-    document.getElementById(`save_buttons_${postId}`).append(saveButton);
-
-    // Event listener for when user clicks new 'Cancel' button
-    cancelButton.addEventListener('click', function() {
-        clearEditView(postId)
-    })
-    
-    // Add cancel button to DOM
-    document.getElementById(`post_headline_${postId}`).append(cancelButton)
-    
-
-    // Fetch request when the user clicks 'save' button
-    saveButton.addEventListener('click', function() {
+        contentDiv = document.querySelector(`#post_content_${btn.dataset.postid}`)
+        contentDiv.innerHTML =
+        `<form id="edit-post-form" class="card-text" style="margin-top: 1rem; margin-bottom: 1.6rem">
+        <div class="form-group" style="margin-bottom: .7rem">
+        <textarea 
+        style="overflow: hidden; resize: none"
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        class="form-control"
+        maxlength="280"
+        id="edit-post-textarea">${contentDiv.innerHTML}</textarea>
+        </div>
+        <input type="submit" class="btn btn-warning post-submit btn-sm" value="Save" maxlength="280" style="float: right; font-size: 11px; margin-right: 4px "/>
+        <button class="btn btn-outline-dark btn-sm" id="close_button" value="Close" style="float: right; font-size: 11px; margin-right: .4rem">Close</button>
+        </form>`
         
-        textArea = document.getElementById(`textarea_${postId}`);
-        
-        // Make fetch request to update page without full reload
-        fetch(`/edit_hoot/${postId}`, {
-            method: 'POST',
-            body: JSON.stringify({
-                // Pass through the new content typed in the text area
-                content: textArea.value,
-            })
-        })
-        
-        .then(response => {
-            if (response.ok || response.status == 400) {
-                return response.json()
-            // Throws error for users who don't have permission (ie users not logged in)
-            } else if(response.status === 404) {
-                clearEditView(postId)
-                
-                // Hide edit button to prevent happening again
-                editButton.style.display = 'none';
+        // Cancel/Close Button
+        const Close_button = document.querySelector('#close_button').onclick = function () {
+            document.querySelector(`#post_content_${btn.dataset.postid}`).style.display = 'block';
+            btn.style.display = 'block' 
+            delete_button.disabled = false;
+            delete_button.style.display = 'block';
+        }
+                const submit_edit = document.querySelector('#edit-post-form').onsubmit = () => {
+                    // retrieve data by user
+                    const content = document.querySelector('#edit-post-textarea').value;
+                    const post_id = btn.dataset.postid
+                    console.log("Edit value recieved")
 
-                // Creates validation message
-                addValidationMessage("You are not authorised to do this", `post_contentgroup_${postId}`)
-
-                // Rejects promise and throws error
-                return Promise.reject('Error 404')
-
-            } else {
-                return Promise.reject('There has been an error: ' + response.status)
-            } 
-        })
-
-        .then(result => {
-            
-            // If successful, load user's sent inbox
-            if (!result.error) {
-            
-                // Sets on screen text to what the user edited
-                postText.innerHTML = result.content;
-                
-                // Removes all edit fields and restores to normal view
-                clearEditView(postId)
-            } 
-            else {
-                clearEditView(postId)
-
-                // Hide edit button to prevent happening again
-                editButton.style.display = 'none';
-                
-                addValidationMessage(result.error, `post_contentgroup_${postId}`)
-                // Add validation message
-                /* const warningMessage = document.createElement('p');
-                warningMessage.innerHTML = result.error;
-                warningMessage.className = 'text-danger';
-                
-                // add validation message to DOM
-                document.getElementById(`post_contentgroup_${postId}`).append(warningMessage); */
-                
+                    if (document.querySelector('#edit-post-textarea').value.length === null) {
+                        return false; 
+                    } else {
+                        fetch('/edit_hoot', {
+                            method: 'PUT',
+                            body: JSON.stringify({content, post_id})
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.error) {
+                                console.log(`Error editing post: ${result.error}`);
+                            } else {
+                                console.log(result.message, content)
+                                contentDiv.innerHTML = content
+                                btn.style.display = 'block'
+                                delete_button.style.display = 'block';
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                        return false;
+                    }
+                }
             }
         })
-        .catch(error => {
-            console.error(error);
-        })
-    })
-
-}
-
-        });
+});
     
-    // Bookmark Hoot
-    
+// Bookmark Hoot
     /*
-    // update post as -- 'edited' --
-    = function  () {
-        if (submit_edit) {
-            const timeDiv = document.querySelector('#time_of_post')
-            timeDiv.innerHTML = `
-            <small class="text-muted" id="time_of_post">• <em>edited</em></small>
-            `
-        } else {
-            const timeDiv = document.querySelector('#time_of_post')
-            timeDiv.innerHTML = `
-            <small class="text-muted" id="time_of_post">•{{ post.time|naturaltime }}</small>
-            `
-        }
-       
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector("#add_bookmarks").onsubmit = () => {
+       const remove_button = document.querySelector("#add_button")
+       remove_button.innerHTML = `
+       `
     }
-            */
-
+});
+*/

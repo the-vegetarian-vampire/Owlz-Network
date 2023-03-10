@@ -16,7 +16,6 @@ import random
 
 from .models import User, Post, Followers, Comment
 
-
 def index(request):
     if request.method == "POST":
         if not request.user.is_authenticated:
@@ -29,21 +28,12 @@ def index(request):
         paginator = Paginator(all_posts, 10)
         page_number = request.GET.get('page', 1)
         page_posts = paginator.get_page(page_number)
-
         # Get Random User per Layout HTML
         all_profiles = User.objects.all()
         random_profile = random.choice(all_profiles)
         # All Users
         all_users = User.objects.all().count()
         """
-        # remove bookmark
-        data = Post.objects.get(pk=id)
-        user = request.user
-        remove_bookmark = data.bookmarked_by.remove(user)
-        # add bookmark
-        add_bookmark = data.bookmarked_by.add(user)
-        user = User.objects.get(username=request.user)
-        avatar_image = User.objects.filter(user=user)
         # all comments
         data = Post.objects.get(pk=id)
         all_comments = Comment.objects..all()
@@ -57,19 +47,14 @@ def index(request):
             "all_users": all_users,
             # "all_comments": all_comments,
             # "total_comments": total_comments,
-            # "remove_bookmark": remove_bookmark,
-            # "add_bookmark": add_bookmark,
-            # "avatar_image": avatar_image,
         })
 
 def login_view(request):
     if request.method == "POST":
-
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-
         # Check if authentication successful
         if user is not None:
             login(request, user)
@@ -91,7 +76,6 @@ def register(request):
         last_name = request.POST["last_name"]
         username = request.POST["username"]
         email = request.POST["email"]
-
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -99,7 +83,6 @@ def register(request):
             return render(request, "network/register.html", {
                 "message": "Passwords must match."
             })
-
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
@@ -153,15 +136,12 @@ def profile(request, username):
             request.user.save()
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
-        if "delete_button" in request.POST:
-            return HttpResponseRedirect(reverse("profile", args=(username, )))
         if "unfollow_button" in request.POST:
             Followers.objects.get(user=user_profile, follower=request.user).delete()
         elif "follow_button" in request.POST:
             Followers.objects.create(user=user_profile, follower=request.user)
         else:
             return HttpResponseRedirect(reverse("profile", args=(username, )))
-
     user_follows_profile = False
     if request.user.is_authenticated:
         user_follows_profile = request.user.following.filter(user=user_profile.id).exists()
@@ -175,9 +155,7 @@ def profile(request, username):
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
-    # Show Bookmarks
-    # user = request.user
-    # bookmarks = user.bookmarks.all().order_by("-time")
+    # User Bio information
     bio = user_profile.bio
     location = user_profile.location
     website = user_profile.website
@@ -199,7 +177,6 @@ def profile(request, username):
         "dob": dob,
         "all_users": all_users,
         #"bookmarks": bookmarks,
-        
     })
 
 @csrf_exempt
@@ -207,21 +184,19 @@ def profile(request, username):
 def edit_hoot(request):
     if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
-
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
-
     data = json.loads(request.body)
     post_id = data.get("post_id", "")
-    time = data.get("time", "")
     post = Post.objects.get(id=post_id)
-    # time = post.get.time
     content = data.get("content", "")
     if content:
         if request.user != post.author:
             return JsonResponse({"error": "Can only edit your posts"})
         if len(content) > 280:
             return JsonResponse({"error": "Too many Characters"})
+        if len(content) == 0:
+            return JsonResponse({"error": "No edit"})
         post.content = content
     post.save()
     return JsonResponse({"message": "Post edited", "content": str(content)}, status=201)
@@ -246,14 +221,6 @@ def like_post(request, post_id):
     return JsonResponse({"likesPost": likes_post, "likesCount": likes}, status=200)
 
 @login_required
-def bookmarks(request):
-    if request.method == "GET":
-        bookmarks = Post.objects.all()
-        return render(request, "network/bookmarks.html", {
-            "bookmarks": bookmarks,
-            })
-
-@login_required
 def remove_bookmarks(request, id):
     user = request.user
     data = Post.objects.get(pk=id)
@@ -261,7 +228,7 @@ def remove_bookmarks(request, id):
     try:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', update_bookmarks))
     finally:
-        return HttpResponseRedirect(reverse("index", update_bookmarks))
+        return HttpResponseRedirect(reverse("index"))
 
 @login_required
 def add_bookmarks(request, id):
@@ -271,7 +238,7 @@ def add_bookmarks(request, id):
     try:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', update_bookmarks))
     finally:
-        return HttpResponseRedirect(reverse("index", update_bookmarks))
+        return HttpResponseRedirect(reverse("index"))
 
 @login_required
 def display_bookmarks(request):
@@ -308,7 +275,6 @@ def inbox_messages(request):
         "all_users": all_users,
     })
 
-
 def search_results(request, *args, **kwargs):
     context = {}
     if request.method == "GET":
@@ -320,13 +286,11 @@ def search_results(request, *args, **kwargs):
                 accounts.append((account))
             context['accounts'] = accounts
             print("\n" f"{accounts}" "\n")
-
     # Get Random User per Layout HTML
     all_profiles = User.objects.all()
     random_profile = random.choice(all_profiles)
     # All Users
     all_users = User.objects.all().count()
-
     return render(request, "network/search_results.html", {
         "context": context,
         "accounts": accounts,
@@ -347,12 +311,10 @@ def comments(request, id):
     )
     new_comment.save()
     return HttpResponseRedirect(reverse("comments",args=(id, )))
-"""
 
-""" 
 @login_required
 def delete_post(request, post_id):
     if request.user.is_authenticated and "delete_button" in request.POST:
         delete_post = Post.objects.get(pk=post_id).delete()
     # return HttpResponseRedirect(request.path_info)
-    return HttpResponseRedirect(reverse("index", delete_post))
+    return HttpResponseRedirect(reverse("index"))

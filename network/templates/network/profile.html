@@ -203,10 +203,8 @@
                   <img alt="profile picture" height="64" width="70px" href=""
                   src="{% static 'network/images/owl-silhouette.png' %}">
                   <input name="file" id="file" type="file" style="margin-left: .8rem;">
-                  <button type="submit" class="btn btn-primary bt-sm" style="border-radius: 999px; float: right;">Upload</button>
+                  <button type="avatar_submit_button" class="btn btn-primary bt-sm" style="border-radius: 999px; float: right;">Upload</button>
                 </div>
-
-
                 
                 <br>
                  <!--Bio-->
@@ -237,10 +235,6 @@
             <div class="modal-footer">
               <button type="submit" name="profile_submit_button" method="POST" class="btn btn-primary bt-sm" style="border-radius: 999px;">Save</button>
             </form>
-
-            <a href="{% url 'avatar_change' %}">Change your avatar</a>{% avatar user_profile.user %}
-
-
           </div>
         </div>
       </div>

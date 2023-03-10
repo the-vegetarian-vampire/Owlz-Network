@@ -1,6 +1,8 @@
 
 from django.urls import path
 from django.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -20,7 +22,4 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("remove_bookmarks/<int:id>", views.remove_bookmarks, name="remove_bookmarks"),
     path("search_results", views.search_results, name="search_results"),
-    
-    # path("settings", views.settings, name="settings"),
-   
 ]

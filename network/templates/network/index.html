@@ -27,7 +27,7 @@
         <!--text area for new 'hoot'-->
         <div class="col-md-9">
             <div class="card-body" style="padding: 0; height: 100%;">
-                <form action="{% url 'index' %}" method="post">
+                <form action="{% url 'index' %}" method="post" id="form_for_hoot">
                     {% csrf_token %}
                     <div class="form-group" style="margin-bottom: 0">
                         <label for="hoot" style="display: none"></label>

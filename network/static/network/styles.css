@@ -49,23 +49,51 @@ a:hover {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
-
-}
-
-/* the searchbar */
-#id_q_small { 
-  border-radius: 999px;
-  width: 95%;
-  padding: .45rem;
-  opacity: 80%;
-  margin-left: 10px;
-  margin-top: 9px;  
 }
 
 /* searchbar placeholder */
 #id_q_small::placeholder {
-  padding-left: 15px;
   color: black;
   opacity: 60%;
+  font-size: 18px;
+}
 
+#search_bar_container {
+  width: 100%; 
+  background-color: rgb(245, 248, 250); 
+}
+
+.searchbar_layout {
+  width: 95%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 20px;
+  margin-top: 9px;
+  margin-left: -8px;
+ 
+}
+.searchbar_layout input{
+  border-radius: 999px;
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  margin-right: -18px;
+  font-size: 22x;
+  font: black;
+  border: 1px solid #b5c9e7;
+}
+
+.searchbar_layout button {
+  border: 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+  margin-right: 2px;
+  margin-left: 4px;
+  background: rgb(245, 248, 250);
+  cursor: pointer;
 }
